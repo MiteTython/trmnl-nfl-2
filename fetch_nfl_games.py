@@ -129,3 +129,11 @@ def main():
 
 if __name__ == "__main__":
     main()
+# Save to JSON file
+    import os
+    os.makedirs('docs', exist_ok=True)
+    
+    output = {'games': [game['daily_data'] for game in all_games]}
+    with open('docs/nfl_games.json', 'w') as f:
+        json.dump(output, f, indent=2)
+    print(f"\nSaved {len(all_games)} games to docs/nfl_games.json")
