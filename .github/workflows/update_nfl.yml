@@ -27,7 +27,7 @@ jobs:
       - name: Fetch NFL data
         env:
           SPORTSBLAZE_API_KEY: ${{ secrets.SPORTSBLAZE_API_KEY }}
-        run: python fetch_nfl.py
+        run: python fetch_nfl_games.py
       
       - name: Commit and push
         run: |
