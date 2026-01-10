@@ -46,6 +46,12 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+
           git add docs/nfl_games.json
-          git diff --staged --quiet || git commit -m "Update NFL scores"
-          git push
+
+          if ! git diff --staged --quiet; then
+            git commit -m "Update NFL scores"
+            git push
+          else
+            echo "No changes to commit"
+          fi
