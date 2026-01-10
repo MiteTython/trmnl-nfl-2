@@ -2,8 +2,7 @@ name: Update NFL Scoreboard
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -29,7 +28,17 @@ jobs:
         env:
           SPORTSBLAZE_API_KEY: ${{ secrets.SPORTSBLAZE_API_KEY }}
         run: python fetch_nfl_games.py
-      
+
+      # 👇 ADD THIS STEP RIGHT HERE
+      - name: Debug state
+        run: |
+          echo "---- FILE EXISTS ----"
+          ls -lah docs
+          echo "---- GIT STATUS ----"
+          git status
+          echo "---- DIFF ----"
+          git diff -- docs/nfl_games.json || true
+
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
