@@ -55,7 +55,7 @@
               "points": 10
             },
             "home": {
-              "points": 7
+              "points": 14
             }
           },
           {
@@ -65,7 +65,7 @@
               "points": 0
             },
             "home": {
-              "points": 0
+              "points": 3
             }
           },
           {
@@ -91,7 +91,7 @@
         ],
         "final": {
           "away": 17,
-          "home": 7
+          "home": 17
         }
       },
       "display_rank": 1
