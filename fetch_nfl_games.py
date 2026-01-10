@@ -10,7 +10,8 @@ import json
 from datetime import datetime, timedelta
 
 # API Configuration - ADD YOUR KEY HERE
-API_KEY = "sbfjn5jo7pr5l62w8qsah0z"
+import os
+API_KEY = os.environ.get('SPORTSBLAZE_API_KEY')
 BASE_URL = "https://api.sportsblaze.com/nfl/v1/boxscores"
 
 def get_date_range():
