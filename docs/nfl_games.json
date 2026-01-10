@@ -62,7 +62,7 @@
             "number": 3,
             "type": "Regulation",
             "away": {
-              "points": 0
+              "points": 3
             },
             "home": {
               "points": 3
@@ -90,7 +90,7 @@
           }
         ],
         "final": {
-          "away": 17,
+          "away": 20,
           "home": 17
         }
       },
