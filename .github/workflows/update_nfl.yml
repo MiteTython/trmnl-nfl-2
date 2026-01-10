@@ -2,7 +2,7 @@ name: Update NFL Scoreboard
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -11,33 +11,36 @@ permissions:
 jobs:
   update-scores:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: pip install requests
-      
+
       - name: Fetch NFL data
         env:
           SPORTSBLAZE_API_KEY: ${{ secrets.SPORTSBLAZE_API_KEY }}
         run: python fetch_nfl_games.py
 
-      # 👇 ADD THIS STEP RIGHT HERE
-      - name: Debug state
+      - name: 🔍 Prove where the file is and what changed
         run: |
-          echo "---- FILE EXISTS ----"
-          ls -lah docs
+          echo "PWD:"
+          pwd
+          echo "---- FIND nfl_games.json ----"
+          find . -name "nfl_games.json"
+          echo "---- LS docs ----"
+          ls -lah docs || true
           echo "---- GIT STATUS ----"
           git status
-          echo "---- DIFF ----"
-          git diff -- docs/nfl_games.json || true
+          echo "---- SHA OF FILE ----"
+          sha256sum docs/nfl_games.json || true
 
       - name: Commit and push
         run: |
