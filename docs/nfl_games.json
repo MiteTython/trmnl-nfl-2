@@ -52,10 +52,10 @@
             "number": 2,
             "type": "Regulation",
             "away": {
-              "points": 0
+              "points": 10
             },
             "home": {
-              "points": 0
+              "points": 7
             }
           },
           {
@@ -90,8 +90,8 @@
           }
         ],
         "final": {
-          "away": 7,
-          "home": 0
+          "away": 17,
+          "home": 7
         }
       },
       "display_rank": 1
