@@ -1,46 +1,36 @@
-name: Update NFL Scoreboard
+name: Fetch NFL Scores
 
 on:
+  schedule:
+    - cron: '*/5 * * * *'
   workflow_dispatch:
-  repository_dispatch:
-    types: [cronjob]
-
-permissions:
-  contents: write
-
-concurrency:
-  group: nfl-update
-  cancel-in-progress: true
 
 jobs:
-  update-scores:
+  fetch:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
+      - uses: actions/checkout@v4
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-
+          python-version: '3.11'
+      
       - name: Install dependencies
         run: pip install requests
-
+      
       - name: Fetch NFL data
         run: python fetch_nfl_games.py
-
-      - name: Pull latest changes
+      
+      - name: Push to Cloudflare KV
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main || true
-
-      - name: Commit and push if changed
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Update NFL scores
-          file_pattern: docs/nfl_games.json
-          push_options: '--force-with-lease'
+          RESPONSE=$(curl -s -X POST "https://trmnl-nfl.mitetython.workers.dev/update" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_UPDATE_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d @docs/nfl_games.json)
+          echo "Cloudflare response: $RESPONSE"
+        
+      - name: Report size
+        run: |
+          SIZE=$(wc -c < docs/nfl_games.json)
+          echo "Payload size: $SIZE bytes"
