@@ -72,6 +72,18 @@ def fetch_daily_boxscores(date):
     except:
         return None
 
+def fetch_game_boxscore(game_id):
+    """Fetch detailed boxscore for a specific game including stats and rosters."""
+    url = f"{BASE_URL}/game/{game_id}.json"
+    params = {'key': API_KEY}
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"  Error fetching game boxscore: {e}")
+        return None
+
 def convert_to_pacific(utc_time_str):
     try:
         from zoneinfo import ZoneInfo
@@ -182,9 +194,48 @@ def main():
     for g in all_games:
         print(f"  {g['display_rank']}. {g['away_team']['name']} @ {g['home_team']['name']} ({g['status']})")
     
+    # Fetch detailed boxscore for rank 1 game
+    featured_game = None
+    if all_games:
+        rank1_game = all_games[0]
+        print(f"\nFetching detailed stats for featured game: {rank1_game['away_team']['name']} @ {rank1_game['home_team']['name']}...")
+        detailed_data = fetch_game_boxscore(rank1_game['id'])
+        
+        if detailed_data:
+            featured_game = {
+                'id': rank1_game['id'],
+                'status': rank1_game['status'],
+                'start_time_pacific': rank1_game['start_time_pacific'],
+                'start_time_utc': rank1_game['start_time_utc'],
+                'season': detailed_data.get('season', {}),
+                'away_team': {
+                    'id': rank1_game['away_team']['id'],
+                    'name': rank1_game['away_team']['name'],
+                    'logo': rank1_game['away_team']['logo']
+                },
+                'home_team': {
+                    'id': rank1_game['home_team']['id'],
+                    'name': rank1_game['home_team']['name'],
+                    'logo': rank1_game['home_team']['logo']
+                },
+                'venue': detailed_data.get('venue', {}),
+                'broadcasters': rank1_game.get('broadcasters', []),
+                'scores': detailed_data.get('scores', {}),
+                'stats': detailed_data.get('stats', {}),
+                'rosters': detailed_data.get('rosters', {}),
+                'display_rank': 1
+            }
+            print(f"  Loaded stats and rosters for featured game")
+        else:
+            print(f"  Could not load detailed stats, using basic game data")
+            featured_game = rank1_game
+    
     # Save to JSON
     os.makedirs('docs', exist_ok=True)
-    output = {'games': all_games}
+    output = {
+        'featured_game': featured_game,
+        'games': all_games
+    }
     with open('docs/nfl_games.json', 'w') as f:
         json.dump(output, f, indent=2)
     
