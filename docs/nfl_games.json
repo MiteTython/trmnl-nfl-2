@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:31:43.811849",
+  "fetched_at": "2026-01-11T18:32:43.153375",
   "season": {
     "year": 2025,
     "type": 3,
@@ -63,6 +63,16 @@
           "home": {
             "points": 0
           }
+        },
+        {
+          "number": 2,
+          "type": "Regulation",
+          "away": {
+            "points": 0
+          },
+          "home": {
+            "points": 0
+          }
         }
       ],
       "total": {
@@ -77,9 +87,9 @@
       "precipitation": 11,
       "gust": 12
     },
-    "clock": "0:00",
-    "period": 1,
-    "period_detail": "End of 1st",
+    "clock": "15:00",
+    "period": 2,
+    "period_detail": "15:00 - 2nd",
     "leaders": {
       "away": {},
       "home": {}
@@ -138,7 +148,7 @@
         "sacks": "0-0",
         "red_zone_efficiency": "0-0",
         "completion_pct": "0",
-        "time_of_possession": " 6:51"
+        "time_of_possession": " 7:01"
       }
     },
     "scoring_plays": [
@@ -217,6 +227,16 @@
             "home": {
               "points": 0
             }
+          },
+          {
+            "number": 2,
+            "type": "Regulation",
+            "away": {
+              "points": 0
+            },
+            "home": {
+              "points": 0
+            }
           }
         ],
         "total": {
@@ -226,9 +246,9 @@
       },
       "odds": null,
       "weather": null,
-      "clock": "0:00",
-      "period": 1,
-      "period_detail": "End of 1st",
+      "clock": "15:00",
+      "period": 2,
+      "period_detail": "15:00 - 2nd",
       "leaders": {
         "away": {},
         "home": {}
