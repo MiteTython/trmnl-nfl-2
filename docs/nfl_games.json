@@ -1,173 +1,9 @@
 {
-  "fetched_at": "2026-01-11T18:35:40.585083",
+  "fetched_at": "2026-01-11T18:36:43.566414",
   "season": {
     "year": 2025,
     "type": 3,
     "week": 1
-  },
-  "featured_game": {
-    "id": "401772977",
-    "status": "In Progress",
-    "start_time_utc": "2026-01-11T18:00Z",
-    "start_time_pacific": "2026-01-11 10:00 AM PST",
-    "name": "Buffalo Bills at Jacksonville Jaguars",
-    "short_name": "BUF @ JAX",
-    "season": {
-      "year": 2025,
-      "type": 3,
-      "type_name": "Postseason",
-      "week": 1
-    },
-    "away_team": {
-      "id": "2",
-      "name": "Buffalo Bills",
-      "abbreviation": "BUF",
-      "short_name": "Bills",
-      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/buf.png",
-      "color": "00338d",
-      "record": "12-5",
-      "score": 3
-    },
-    "home_team": {
-      "id": "30",
-      "name": "Jacksonville Jaguars",
-      "abbreviation": "JAX",
-      "short_name": "Jaguars",
-      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/jax.png",
-      "color": "007487",
-      "record": "13-4",
-      "score": 6
-    },
-    "venue": {
-      "name": "EverBank Stadium",
-      "city": "Jacksonville",
-      "state": "FL",
-      "indoor": false,
-      "capacity": 0
-    },
-    "broadcasters": [
-      {
-        "name": "CBS",
-        "type": "TV",
-        "logo": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Paramount_Plus.svg"
-      }
-    ],
-    "scores": {
-      "periods": [
-        {
-          "number": 1,
-          "type": "Regulation",
-          "away": {
-            "points": 3
-          },
-          "home": {
-            "points": 0
-          }
-        },
-        {
-          "number": 2,
-          "type": "Regulation",
-          "away": {
-            "points": 0
-          },
-          "home": {
-            "points": 6
-          }
-        }
-      ],
-      "total": {
-        "away": 3,
-        "home": 6
-      }
-    },
-    "odds": null,
-    "weather": {
-      "temperature": 61,
-      "condition": "",
-      "precipitation": 11,
-      "gust": 12
-    },
-    "clock": "14:14",
-    "period": 2,
-    "period_detail": "14:14 - 2nd",
-    "leaders": {
-      "away": {},
-      "home": {}
-    },
-    "situation": {
-      "down": -1,
-      "distance": 10,
-      "yard_line": 100,
-      "down_distance_text": "",
-      "spot_text": "",
-      "possession_text": "",
-      "possession": "",
-      "possession_short": "",
-      "is_red_zone": true,
-      "home_timeouts": 3,
-      "away_timeouts": 3,
-      "last_play": {
-        "text": "(Shotgun) T.Lawrence pass short left to B.Thomas for 3 yards, TOUCHDOWN.",
-        "type": "Passing Touchdown",
-        "yards": 3
-      }
-    },
-    "display_rank": 1,
-    "stats": {
-      "away": {
-        "total_yards": "53",
-        "passing_yards": "37",
-        "rushing_yards": "16",
-        "first_downs": "2",
-        "third_down_efficiency": "1-3",
-        "fourth_down_efficiency": "0-0",
-        "total_plays": "0",
-        "yards_per_play": "4.8",
-        "turnovers": "0",
-        "fumbles_lost": "0",
-        "interceptions": "0",
-        "penalties": "3-20",
-        "sacks": "0-0",
-        "red_zone_efficiency": "0-0",
-        "completion_pct": "0",
-        "time_of_possession": " 7:59"
-      },
-      "home": {
-        "total_yards": "89",
-        "passing_yards": "30",
-        "rushing_yards": "59",
-        "first_downs": "5",
-        "third_down_efficiency": "1-2",
-        "fourth_down_efficiency": "0-0",
-        "total_plays": "0",
-        "yards_per_play": "6.4",
-        "turnovers": "1",
-        "fumbles_lost": "0",
-        "interceptions": "1",
-        "penalties": "1-5",
-        "sacks": "0-0",
-        "red_zone_efficiency": "0-0",
-        "completion_pct": "0",
-        "time_of_possession": " 7:01"
-      }
-    },
-    "scoring_plays": [
-      {
-        "period": 1,
-        "clock": "2:54",
-        "team": {
-          "id": "2",
-          "name": "Buffalo Bills",
-          "abbreviation": "BUF",
-          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png"
-        },
-        "type": "Field Goal Good",
-        "text": "Matt Prater 50 Yd Field Goal",
-        "away_score": 3,
-        "home_score": 0
-      }
-    ],
-    "attendance": 0
   },
   "games": [
     {
@@ -201,13 +37,14 @@
         "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/jax.png",
         "color": "007487",
         "record": "13-4",
-        "score": 6
+        "score": 7
       },
       "venue": {
         "name": "EverBank Stadium",
         "city": "Jacksonville",
         "state": "FL",
-        "indoor": false
+        "indoor": false,
+        "capacity": 0
       },
       "broadcasters": [
         {
@@ -235,17 +72,22 @@
               "points": 0
             },
             "home": {
-              "points": 6
+              "points": 7
             }
           }
         ],
         "total": {
           "away": 3,
-          "home": 6
+          "home": 7
         }
       },
       "odds": null,
-      "weather": null,
+      "weather": {
+        "temperature": 61,
+        "condition": "",
+        "precipitation": 11,
+        "gust": 12
+      },
       "clock": "14:14",
       "period": 2,
       "period_detail": "14:14 - 2nd",
@@ -255,8 +97,8 @@
       },
       "situation": {
         "down": -1,
-        "distance": 10,
-        "yard_line": 100,
+        "distance": 0,
+        "yard_line": 85,
         "down_distance_text": "",
         "spot_text": "",
         "possession_text": "",
@@ -266,12 +108,81 @@
         "home_timeouts": 3,
         "away_timeouts": 3,
         "last_play": {
-          "text": "(Shotgun) T.Lawrence pass short left to B.Thomas for 3 yards, TOUCHDOWN.",
-          "type": "Passing Touchdown",
-          "yards": 3
+          "text": "Official Timeout at 14:14.",
+          "type": "Official Timeout",
+          "yards": 0
         }
       },
-      "display_rank": 1
+      "display_rank": 1,
+      "stats": {
+        "away": {
+          "total_yards": "53",
+          "passing_yards": "37",
+          "rushing_yards": "16",
+          "first_downs": "2",
+          "third_down_efficiency": "1-3",
+          "fourth_down_efficiency": "0-0",
+          "total_plays": "0",
+          "yards_per_play": "4.8",
+          "turnovers": "0",
+          "fumbles_lost": "0",
+          "interceptions": "0",
+          "penalties": "3-20",
+          "sacks": "0-0",
+          "red_zone_efficiency": "0-0",
+          "completion_pct": "0",
+          "time_of_possession": " 7:59"
+        },
+        "home": {
+          "total_yards": "92",
+          "passing_yards": "33",
+          "rushing_yards": "59",
+          "first_downs": "6",
+          "third_down_efficiency": "1-2",
+          "fourth_down_efficiency": "0-0",
+          "total_plays": "0",
+          "yards_per_play": "6.1",
+          "turnovers": "1",
+          "fumbles_lost": "0",
+          "interceptions": "1",
+          "penalties": "1-5",
+          "sacks": "0-0",
+          "red_zone_efficiency": "1-1",
+          "completion_pct": "0",
+          "time_of_possession": " 7:47"
+        }
+      },
+      "scoring_plays": [
+        {
+          "period": 1,
+          "clock": "2:54",
+          "team": {
+            "id": "2",
+            "name": "Buffalo Bills",
+            "abbreviation": "BUF",
+            "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png"
+          },
+          "type": "Field Goal Good",
+          "text": "Matt Prater 50 Yd Field Goal",
+          "away_score": 3,
+          "home_score": 0
+        },
+        {
+          "period": 2,
+          "clock": "14:14",
+          "team": {
+            "id": "30",
+            "name": "Jacksonville Jaguars",
+            "abbreviation": "JAX",
+            "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/jax.png"
+          },
+          "type": "Passing Touchdown",
+          "text": "Brian Thomas Jr. 3 Yd pass from Trevor Lawrence (Cam Little Kick)",
+          "away_score": 3,
+          "home_score": 7
+        }
+      ],
+      "attendance": 0
     },
     {
       "id": "401772979",
