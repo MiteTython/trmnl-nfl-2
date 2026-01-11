@@ -202,6 +202,38 @@ def main():
         detailed_data = fetch_game_boxscore(rank1_game['id'])
         
         if detailed_data:
+            # Extract only the specific stats we need
+            raw_stats = detailed_data.get('stats', {})
+            away_stats = raw_stats.get('away', {})
+            home_stats = raw_stats.get('home', {})
+            
+            filtered_stats = {
+                'away': {
+                    'passing_yards': away_stats.get('passing_yards', 0),
+                    'rushing_yards': away_stats.get('rushing_yards', 0),
+                    'first_downs': away_stats.get('first_downs', 0),
+                    'third_down_attempts': away_stats.get('third_down_attempts', 0),
+                    'third_down_conversions': away_stats.get('third_down_conversions', 0),
+                    'fourth_down_attempts': away_stats.get('fourth_down_attempts', 0),
+                    'fourth_down_conversions': away_stats.get('fourth_down_conversions', 0),
+                    'turnovers': away_stats.get('turnovers', 0),
+                    'punts': away_stats.get('punts', 0),
+                    'time_of_possession': away_stats.get('time_of_possession', '0:00')
+                },
+                'home': {
+                    'passing_yards': home_stats.get('passing_yards', 0),
+                    'rushing_yards': home_stats.get('rushing_yards', 0),
+                    'first_downs': home_stats.get('first_downs', 0),
+                    'third_down_attempts': home_stats.get('third_down_attempts', 0),
+                    'third_down_conversions': home_stats.get('third_down_conversions', 0),
+                    'fourth_down_attempts': home_stats.get('fourth_down_attempts', 0),
+                    'fourth_down_conversions': home_stats.get('fourth_down_conversions', 0),
+                    'turnovers': home_stats.get('turnovers', 0),
+                    'punts': home_stats.get('punts', 0),
+                    'time_of_possession': home_stats.get('time_of_possession', '0:00')
+                }
+            }
+            
             featured_game = {
                 'id': rank1_game['id'],
                 'status': rank1_game['status'],
@@ -221,11 +253,10 @@ def main():
                 'venue': detailed_data.get('venue', {}),
                 'broadcasters': rank1_game.get('broadcasters', []),
                 'scores': detailed_data.get('scores', {}),
-                'stats': detailed_data.get('stats', {}),
-                'rosters': detailed_data.get('rosters', {}),
+                'stats': filtered_stats,
                 'display_rank': 1
             }
-            print(f"  Loaded stats and rosters for featured game")
+            print(f"  Loaded stats for featured game")
         else:
             print(f"  Could not load detailed stats, using basic game data")
             featured_game = rank1_game
