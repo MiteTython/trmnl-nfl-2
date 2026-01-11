@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:30:42.419469",
+  "fetched_at": "2026-01-11T18:31:43.811849",
   "season": {
     "year": 2025,
     "type": 3,
@@ -77,29 +77,29 @@
       "precipitation": 11,
       "gust": 12
     },
-    "clock": "1:32",
+    "clock": "0:00",
     "period": 1,
-    "period_detail": "1:32 - 1st",
+    "period_detail": "End of 1st",
     "leaders": {
       "away": {},
       "home": {}
     },
     "situation": {
       "down": 1,
-      "distance": 10,
-      "yard_line": 70,
-      "down_distance_text": "1st & 10 at BUF 30",
-      "spot_text": "1st & 10",
-      "possession_text": "BUF 30",
+      "distance": 3,
+      "yard_line": 97,
+      "down_distance_text": "1st & Goal at BUF 3",
+      "spot_text": "1st & Goal",
+      "possession_text": "BUF 3",
       "possession": "30",
       "possession_short": "",
-      "is_red_zone": false,
+      "is_red_zone": true,
       "home_timeouts": 3,
       "away_timeouts": 3,
       "last_play": {
-        "text": "B.Tuten right end to BUF 30 for 20 yards (M.Milano).",
-        "type": "Rush",
-        "yards": 20
+        "text": "END QUARTER 1",
+        "type": "End Period",
+        "yards": 0
       }
     },
     "display_rank": 1,
@@ -123,14 +123,14 @@
         "time_of_possession": " 7:59"
       },
       "home": {
-        "total_yards": "62",
+        "total_yards": "89",
         "passing_yards": "30",
-        "rushing_yards": "32",
-        "first_downs": "3",
+        "rushing_yards": "59",
+        "first_downs": "5",
         "third_down_efficiency": "1-2",
         "fourth_down_efficiency": "0-0",
         "total_plays": "0",
-        "yards_per_play": "5.6",
+        "yards_per_play": "6.8",
         "turnovers": "1",
         "fumbles_lost": "0",
         "interceptions": "1",
@@ -138,7 +138,7 @@
         "sacks": "0-0",
         "red_zone_efficiency": "0-0",
         "completion_pct": "0",
-        "time_of_possession": " 5:29"
+        "time_of_possession": " 6:51"
       }
     },
     "scoring_plays": [
@@ -226,29 +226,29 @@
       },
       "odds": null,
       "weather": null,
-      "clock": "1:32",
+      "clock": "0:00",
       "period": 1,
-      "period_detail": "1:32 - 1st",
+      "period_detail": "End of 1st",
       "leaders": {
         "away": {},
         "home": {}
       },
       "situation": {
         "down": 1,
-        "distance": 10,
-        "yard_line": 70,
-        "down_distance_text": "1st & 10 at BUF 30",
-        "spot_text": "1st & 10",
-        "possession_text": "BUF 30",
+        "distance": 3,
+        "yard_line": 97,
+        "down_distance_text": "1st & Goal at BUF 3",
+        "spot_text": "1st & Goal",
+        "possession_text": "BUF 3",
         "possession": "30",
         "possession_short": "",
-        "is_red_zone": false,
+        "is_red_zone": true,
         "home_timeouts": 3,
         "away_timeouts": 3,
         "last_play": {
-          "text": "B.Tuten right end to BUF 30 for 20 yards (M.Milano).",
-          "type": "Rush",
-          "yards": 20
+          "text": "END QUARTER 1",
+          "type": "End Period",
+          "yards": 0
         }
       },
       "display_rank": 1
