@@ -543,8 +543,10 @@ def main():
     for g in all_games:
         print(f"  {g['display_rank']}. {g['away_team']['abbreviation']} @ {g['home_team']['abbreviation']} ({g['status']})")
     
-    # Fetch detailed summary for featured game
-    featured_game = None
+    # Sort games by display_rank before enrichment
+    all_games.sort(key=lambda g: g.get('display_rank', 999))
+    
+    # Enrich the #1 ranked game in-place (no duplicate)
     if all_games:
         rank1_game = all_games[0]
         print(f"\nFetching detailed summary for: {rank1_game['away_team']['name']} @ {rank1_game['home_team']['name']}...")
@@ -552,13 +554,13 @@ def main():
         summary = fetch_game_summary(rank1_game['id'])
         
         if summary:
-            featured_game = enrich_featured_game(rank1_game.copy(), summary)
+            # Enrich in-place - modifies all_games[0] directly
+            enrich_featured_game(rank1_game, summary)
             print("  Loaded detailed stats, scoring plays, and game leaders")
-            if featured_game.get('situation'):
-                print(f"  Situation: {featured_game['situation'].get('down_distance_text', 'N/A')}")
+            if rank1_game.get('situation'):
+                print(f"  Situation: {rank1_game['situation'].get('down_distance_text', 'N/A')}")
         else:
             print("  Could not load summary, using scoreboard data")
-            featured_game = rank1_game
     
     # Get season info from scoreboard
     season_info = {
@@ -567,15 +569,11 @@ def main():
         'week': scoreboard.get('week', {}).get('number', 0)
     }
     
-    # Sort games by display_rank before output (ensures correct order for Liquid template)
-    all_games.sort(key=lambda g: g.get('display_rank', 999))
-    
-    # Save to JSON
+    # Save to JSON - no more featured_game duplicate
     os.makedirs('docs', exist_ok=True)
     output = {
         'fetched_at': datetime.now().isoformat(),
         'season': season_info,
-        'featured_game': featured_game,
         'games': all_games
     }
     
