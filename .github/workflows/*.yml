@@ -1,0 +1,24 @@
+name: Cron Heartbeat Test
+
+on:
+  schedule:
+    - cron: "* * * * *"   # every minute (temporary)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Heartbeat
+        run: |
+          echo "CRON FIRED"
+          date -u
+          echo "Files in repo:"
+          ls -la
