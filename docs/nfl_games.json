@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:24:42.350841",
+  "fetched_at": "2026-01-11T18:25:42.737100",
   "season": {
     "year": 2025,
     "type": 3,
@@ -26,7 +26,7 @@
       "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/buf.png",
       "color": "00338d",
       "record": "12-5",
-      "score": 0
+      "score": 3
     },
     "home_team": {
       "id": "30",
@@ -58,7 +58,7 @@
           "number": 1,
           "type": "Regulation",
           "away": {
-            "points": 0
+            "points": 3
           },
           "home": {
             "points": 0
@@ -66,7 +66,7 @@
         }
       ],
       "total": {
-        "away": 0,
+        "away": 3,
         "home": 0
       }
     },
@@ -77,9 +77,9 @@
       "precipitation": 11,
       "gust": 12
     },
-    "clock": "3:04",
+    "clock": "2:54",
     "period": 1,
-    "period_detail": "3:04 - 1st",
+    "period_detail": "2:54 - 1st",
     "leaders": {
       "away": {},
       "home": {}
@@ -102,7 +102,7 @@
         "sacks": "0-0",
         "red_zone_efficiency": "0-0",
         "completion_pct": "0",
-        "time_of_possession": " 7:49"
+        "time_of_possession": " 7:59"
       },
       "home": {
         "total_yards": "27",
@@ -123,7 +123,22 @@
         "time_of_possession": " 4:07"
       }
     },
-    "scoring_plays": [],
+    "scoring_plays": [
+      {
+        "period": 1,
+        "clock": "2:54",
+        "team": {
+          "id": "2",
+          "name": "Buffalo Bills",
+          "abbreviation": "BUF",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png"
+        },
+        "type": "Field Goal Good",
+        "text": "Matt Prater 50 Yd Field Goal ",
+        "away_score": 3,
+        "home_score": 0
+      }
+    ],
     "situation": null,
     "attendance": 0
   },
@@ -149,7 +164,7 @@
         "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/buf.png",
         "color": "00338d",
         "record": "12-5",
-        "score": 0
+        "score": 3
       },
       "home_team": {
         "id": "30",
@@ -180,7 +195,7 @@
             "number": 1,
             "type": "Regulation",
             "away": {
-              "points": 0
+              "points": 3
             },
             "home": {
               "points": 0
@@ -188,15 +203,15 @@
           }
         ],
         "total": {
-          "away": 0,
+          "away": 3,
           "home": 0
         }
       },
       "odds": null,
       "weather": null,
-      "clock": "3:04",
+      "clock": "2:54",
       "period": 1,
-      "period_detail": "3:04 - 1st",
+      "period_detail": "2:54 - 1st",
       "leaders": {
         "away": {},
         "home": {}
