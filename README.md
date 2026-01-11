@@ -1,1 +1,3 @@
 # trmnl-nflscores
+
+not sure why the chron job stopped....
