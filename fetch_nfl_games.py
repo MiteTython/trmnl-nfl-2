@@ -5,6 +5,7 @@ Fetch NFL games from SportsBlaze API
 import requests
 import json
 import os
+import random
 from datetime import datetime, timedelta
 
 API_KEY = os.environ.get('SPORTSBLAZE_API_KEY')
@@ -146,10 +147,24 @@ def parse_game(game_data):
     return result
 
 def rank_games(games):
-    """Rank games: In Progress first, then Final, then Scheduled."""
+    """Rank games: In Progress first, then Final, then Scheduled.
+    
+    Randomly selects the featured game from the highest priority tier
+    to provide variety across runs.
+    """
     in_progress = [g for g in games if g['status'] == 'In Progress']
     final = [g for g in games if g['status'] == 'Final']
     scheduled = [g for g in games if g['status'] == 'Scheduled']
+    
+    # Randomly select featured game from highest priority tier
+    if in_progress:
+        featured = random.choice(in_progress)
+        in_progress.remove(featured)
+        in_progress = [featured] + in_progress
+    elif final:
+        featured = random.choice(final)
+        final.remove(featured)
+        final = [featured] + final
     
     # Sort scheduled by start time
     scheduled.sort(key=lambda g: g['start_time_utc'])
@@ -264,6 +279,7 @@ def main():
     # Save to JSON
     os.makedirs('docs', exist_ok=True)
     output = {
+        'fetched_at': datetime.now().isoformat(),
         'featured_game': featured_game,
         'games': all_games
     }
