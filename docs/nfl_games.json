@@ -1,4 +1,459 @@
 {
-  "featured_game": null,
-  "games": []
+  "featured_game": {
+    "id": "67e43b4e-2e4f-5fe3-bb18-9b45bc27b697",
+    "status": "Final",
+    "start_time_pacific": "2026-01-10 01:30 PM PST",
+    "start_time_utc": "2026-01-10T21:30:00Z",
+    "season": {
+      "year": 2025,
+      "type": "Playoffs",
+      "week": 1
+    },
+    "away_team": {
+      "id": "9205065d-98c3-504f-8462-e41eaf2df541",
+      "name": "Los Angeles Rams",
+      "logo": "https://static.www.nfl.com/image/private/f_auto/league/ayvwcmluj2ohkdlbiegi"
+    },
+    "home_team": {
+      "id": "c29a95ad-52e4-534a-915a-6023d2ea3b23",
+      "name": "Carolina Panthers",
+      "logo": "https://static.www.nfl.com/image/private/f_auto/league/ervfzgrqdpnc7lh5gqwq"
+    },
+    "venue": {
+      "name": "Bank of America Stadium",
+      "location": "Charlotte"
+    },
+    "broadcasters": [
+      {
+        "name": "FOX",
+        "type": "TV",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Fox_Broadcasting_Company_logo_%282019%29.svg"
+      },
+      {
+        "name": "FOX Deportes",
+        "type": "TV",
+        "logo": ""
+      }
+    ],
+    "scores": {
+      "periods": [
+        {
+          "number": 1,
+          "type": "Regulation",
+          "away": {
+            "points": 7
+          },
+          "home": {
+            "points": 0
+          }
+        },
+        {
+          "number": 2,
+          "type": "Regulation",
+          "away": {
+            "points": 10
+          },
+          "home": {
+            "points": 14
+          }
+        },
+        {
+          "number": 3,
+          "type": "Regulation",
+          "away": {
+            "points": 3
+          },
+          "home": {
+            "points": 3
+          }
+        },
+        {
+          "number": 4,
+          "type": "Regulation",
+          "away": {
+            "points": 14
+          },
+          "home": {
+            "points": 14
+          }
+        }
+      ],
+      "total": {
+        "away": {
+          "points": 34
+        },
+        "home": {
+          "points": 31
+        }
+      }
+    },
+    "stats": {
+      "away": {
+        "passing_yards": 295,
+        "rushing_yards": 116,
+        "first_downs": 21,
+        "third_down_attempts": 13,
+        "third_down_conversions": 3,
+        "fourth_down_attempts": 2,
+        "fourth_down_conversions": 1,
+        "turnovers": 1,
+        "punts": 4,
+        "time_of_possession": "31:46"
+      },
+      "home": {
+        "passing_yards": 250,
+        "rushing_yards": 83,
+        "first_downs": 21,
+        "third_down_attempts": 12,
+        "third_down_conversions": 5,
+        "fourth_down_attempts": 3,
+        "fourth_down_conversions": 0,
+        "turnovers": 2,
+        "punts": 3,
+        "time_of_possession": "28:14"
+      }
+    },
+    "display_rank": 1
+  },
+  "games": [
+    {
+      "id": "67e43b4e-2e4f-5fe3-bb18-9b45bc27b697",
+      "status": "Final",
+      "start_time_pacific": "2026-01-10 01:30 PM PST",
+      "start_time_utc": "2026-01-10T21:30:00Z",
+      "season": {
+        "year": 2025,
+        "type": "Playoffs",
+        "week": 1
+      },
+      "away_team": {
+        "id": "9205065d-98c3-504f-8462-e41eaf2df541",
+        "name": "Los Angeles Rams",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/ayvwcmluj2ohkdlbiegi"
+      },
+      "home_team": {
+        "id": "c29a95ad-52e4-534a-915a-6023d2ea3b23",
+        "name": "Carolina Panthers",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/ervfzgrqdpnc7lh5gqwq"
+      },
+      "venue": {
+        "name": "Bank of America Stadium",
+        "location": "Charlotte"
+      },
+      "broadcasters": [
+        {
+          "name": "FOX",
+          "type": "TV",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Fox_Broadcasting_Company_logo_%282019%29.svg"
+        },
+        {
+          "name": "FOX Deportes",
+          "type": "TV",
+          "logo": ""
+        }
+      ],
+      "scores": {
+        "periods": [
+          {
+            "number": 1,
+            "type": "Regulation",
+            "away": {
+              "points": 7
+            },
+            "home": {
+              "points": 0
+            }
+          },
+          {
+            "number": 2,
+            "type": "Regulation",
+            "away": {
+              "points": 10
+            },
+            "home": {
+              "points": 14
+            }
+          },
+          {
+            "number": 3,
+            "type": "Regulation",
+            "away": {
+              "points": 3
+            },
+            "home": {
+              "points": 3
+            }
+          },
+          {
+            "number": 4,
+            "type": "Regulation",
+            "away": {
+              "points": 14
+            },
+            "home": {
+              "points": 14
+            }
+          }
+        ],
+        "final": {
+          "away": 34,
+          "home": 31
+        }
+      },
+      "display_rank": 1
+    },
+    {
+      "id": "9ce0e5a6-5683-578a-b40a-9b7f43081aea",
+      "status": "Final",
+      "start_time_pacific": "2026-01-10 05:00 PM PST",
+      "start_time_utc": "2026-01-11T01:00:00Z",
+      "season": {
+        "year": 2025,
+        "type": "Playoffs",
+        "week": 1
+      },
+      "away_team": {
+        "id": "76a9d3d3-31bb-542e-afe3-54d634a80a3f",
+        "name": "Green Bay Packers",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/gppfvr7n8gljgjaqux2x"
+      },
+      "home_team": {
+        "id": "c1a817c7-b5ef-58f9-a24b-3f3950b67707",
+        "name": "Chicago Bears",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/ijrplti0kmzsyoaikhv1"
+      },
+      "venue": {
+        "name": "Soldier Field",
+        "location": "Chicago"
+      },
+      "broadcasters": [
+        {
+          "name": "Prime Video",
+          "type": "TV",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/9/90/Prime_Video_logo_%282024%29.svg"
+        }
+      ],
+      "scores": {
+        "periods": [
+          {
+            "number": 1,
+            "type": "Regulation",
+            "away": {
+              "points": 7
+            },
+            "home": {
+              "points": 3
+            }
+          },
+          {
+            "number": 2,
+            "type": "Regulation",
+            "away": {
+              "points": 14
+            },
+            "home": {
+              "points": 0
+            }
+          },
+          {
+            "number": 3,
+            "type": "Regulation",
+            "away": {
+              "points": 0
+            },
+            "home": {
+              "points": 3
+            }
+          },
+          {
+            "number": 4,
+            "type": "Regulation",
+            "away": {
+              "points": 6
+            },
+            "home": {
+              "points": 25
+            }
+          }
+        ],
+        "final": {
+          "away": 27,
+          "home": 31
+        }
+      },
+      "display_rank": 2
+    },
+    {
+      "id": "c1672278-edae-5bb8-92d4-cd8214a3674d",
+      "status": "Scheduled",
+      "start_time_pacific": "2026-01-11 10:00 AM PST",
+      "start_time_utc": "2026-01-11T18:00:00Z",
+      "season": {
+        "year": 2025,
+        "type": "Playoffs",
+        "week": 1
+      },
+      "away_team": {
+        "id": "0ab09cdd-9a4b-56e5-985b-ed257d12b3d9",
+        "name": "Buffalo Bills",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/giphcy6ie9mxbnldntsf"
+      },
+      "home_team": {
+        "id": "69e925e2-a8e2-5ab8-b01e-3bd24687e4c0",
+        "name": "Jacksonville Jaguars",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/qycbib6ivrm9dqaexryk"
+      },
+      "venue": {
+        "name": "EverBank Stadium",
+        "location": "Jacksonville"
+      },
+      "broadcasters": [
+        {
+          "name": "CBS",
+          "type": "TV",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Paramount_Plus.svg"
+        },
+        {
+          "name": "PARAMOUNT+",
+          "type": "TV",
+          "logo": ""
+        }
+      ],
+      "display_rank": 3
+    },
+    {
+      "id": "38bed82d-903b-5cd4-a62e-e2d78c3c168c",
+      "status": "Scheduled",
+      "start_time_pacific": "2026-01-11 01:30 PM PST",
+      "start_time_utc": "2026-01-11T21:30:00Z",
+      "season": {
+        "year": 2025,
+        "type": "Playoffs",
+        "week": 1
+      },
+      "away_team": {
+        "id": "9a175db9-b8c0-50a5-9b88-ef0b6a205ce4",
+        "name": "San Francisco 49ers",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/dxibuyxbk0b9ua5ih9hn"
+      },
+      "home_team": {
+        "id": "1ea77ce7-fbf4-5347-ba3c-fabab06f310d",
+        "name": "Philadelphia Eagles",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/puhrqgj71gobgdkdo6uq"
+      },
+      "venue": {
+        "name": "Lincoln Financial Field",
+        "location": "Philadelphia"
+      },
+      "broadcasters": [
+        {
+          "name": "FOX",
+          "type": "TV",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Fox_Broadcasting_Company_logo_%282019%29.svg"
+        },
+        {
+          "name": "FOX Deportes",
+          "type": "TV",
+          "logo": ""
+        }
+      ],
+      "display_rank": 4
+    },
+    {
+      "id": "e8b64f8e-9134-5226-9c2e-7cbf13b529b5",
+      "status": "Scheduled",
+      "start_time_pacific": "2026-01-11 05:15 PM PST",
+      "start_time_utc": "2026-01-12T01:15:00Z",
+      "season": {
+        "year": 2025,
+        "type": "Playoffs",
+        "week": 1
+      },
+      "away_team": {
+        "id": "7add6f7e-3e38-5b8f-b30f-4a161d59b2f0",
+        "name": "Los Angeles Chargers",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/dhfidtn8jrumakbogeu4"
+      },
+      "home_team": {
+        "id": "8cf469d6-3ece-53a3-880c-1e13176aacbf",
+        "name": "New England Patriots",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/moyfxx3dq5pio4aiftnc"
+      },
+      "venue": {
+        "name": "Gillette Stadium",
+        "location": "Foxborough"
+      },
+      "broadcasters": [
+        {
+          "name": "NBC",
+          "type": "TV",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/d/d3/NBCUniversal_Peacock_Logo.svg"
+        },
+        {
+          "name": "PEACOCK",
+          "type": "TV",
+          "logo": ""
+        },
+        {
+          "name": "Telemundo",
+          "type": "TV",
+          "logo": ""
+        },
+        {
+          "name": "Universo",
+          "type": "TV",
+          "logo": ""
+        }
+      ],
+      "display_rank": 5
+    },
+    {
+      "id": "235e359c-47d7-5168-9112-e5a6abd2bbd0",
+      "status": "Scheduled",
+      "start_time_pacific": "2026-01-12 05:15 PM PST",
+      "start_time_utc": "2026-01-13T01:15:00Z",
+      "season": {
+        "year": 2025,
+        "type": "Playoffs",
+        "week": 1
+      },
+      "away_team": {
+        "id": "99331351-742b-531b-ae86-dc93f1d43036",
+        "name": "Houston Texans",
+        "logo": "https://static.www.nfl.com/image/upload/f_auto/league/u6camnphqvjc6mku6u3c"
+      },
+      "home_team": {
+        "id": "599340c6-638f-59fb-a684-990ca660865b",
+        "name": "Pittsburgh Steelers",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/xujg9t3t4u5nmjgr54wx"
+      },
+      "venue": {
+        "name": "Acrisure Stadium",
+        "location": "Pittsburgh"
+      },
+      "broadcasters": [
+        {
+          "name": "ESPN",
+          "type": "TV",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg"
+        },
+        {
+          "name": "ABC",
+          "type": "TV",
+          "logo": ""
+        },
+        {
+          "name": "ESPN2",
+          "type": "TV",
+          "logo": ""
+        },
+        {
+          "name": "ESPN Deportes",
+          "type": "TV",
+          "logo": ""
+        }
+      ],
+      "display_rank": 6
+    }
+  ]
 }
