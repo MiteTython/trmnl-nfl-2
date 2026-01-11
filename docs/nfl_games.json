@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:33:41.085094",
+  "fetched_at": "2026-01-11T18:34:40.317897",
   "season": {
     "year": 2025,
     "type": 3,
@@ -95,11 +95,11 @@
       "home": {}
     },
     "situation": {
-      "down": 1,
+      "down": 2,
       "distance": 3,
       "yard_line": 97,
-      "down_distance_text": "1st & Goal at BUF 3",
-      "spot_text": "1st & Goal",
+      "down_distance_text": "2nd & Goal at BUF 3",
+      "spot_text": "2nd & Goal",
       "possession_text": "BUF 3",
       "possession": "30",
       "possession_short": "",
@@ -107,8 +107,8 @@
       "home_timeouts": 3,
       "away_timeouts": 3,
       "last_play": {
-        "text": "END QUARTER 1",
-        "type": "End Period",
+        "text": "(Shotgun) T.Lawrence pass short middle to B.Strange to BUF 3 for no gain (G.Rousseau).",
+        "type": "Pass Reception",
         "yards": 0
       }
     },
@@ -254,11 +254,11 @@
         "home": {}
       },
       "situation": {
-        "down": 1,
+        "down": 2,
         "distance": 3,
         "yard_line": 97,
-        "down_distance_text": "1st & Goal at BUF 3",
-        "spot_text": "1st & Goal",
+        "down_distance_text": "2nd & Goal at BUF 3",
+        "spot_text": "2nd & Goal",
         "possession_text": "BUF 3",
         "possession": "30",
         "possession_short": "",
@@ -266,8 +266,8 @@
         "home_timeouts": 3,
         "away_timeouts": 3,
         "last_play": {
-          "text": "END QUARTER 1",
-          "type": "End Period",
+          "text": "(Shotgun) T.Lawrence pass short middle to B.Strange to BUF 3 for no gain (G.Rousseau).",
+          "type": "Pass Reception",
           "yards": 0
         }
       },
