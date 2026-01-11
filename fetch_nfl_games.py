@@ -502,6 +502,9 @@ def main():
         'week': scoreboard.get('week', {}).get('number', 0)
     }
     
+    # Sort games by display_rank before output (ensures correct order for Liquid template)
+    all_games.sort(key=lambda g: g.get('display_rank', 999))
+    
     # Save to JSON
     os.makedirs('docs', exist_ok=True)
     output = {
