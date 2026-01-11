@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:29:43.551395",
+  "fetched_at": "2026-01-11T18:30:42.419469",
   "season": {
     "year": 2025,
     "type": 3,
@@ -77,12 +77,30 @@
       "precipitation": 11,
       "gust": 12
     },
-    "clock": "2:11",
+    "clock": "1:32",
     "period": 1,
-    "period_detail": "2:11 - 1st",
+    "period_detail": "1:32 - 1st",
     "leaders": {
       "away": {},
       "home": {}
+    },
+    "situation": {
+      "down": 1,
+      "distance": 10,
+      "yard_line": 70,
+      "down_distance_text": "1st & 10 at BUF 30",
+      "spot_text": "1st & 10",
+      "possession_text": "BUF 30",
+      "possession": "30",
+      "possession_short": "",
+      "is_red_zone": false,
+      "home_timeouts": 3,
+      "away_timeouts": 3,
+      "last_play": {
+        "text": "B.Tuten right end to BUF 30 for 20 yards (M.Milano).",
+        "type": "Rush",
+        "yards": 20
+      }
     },
     "display_rank": 1,
     "stats": {
@@ -105,14 +123,14 @@
         "time_of_possession": " 7:59"
       },
       "home": {
-        "total_yards": "42",
+        "total_yards": "62",
         "passing_yards": "30",
-        "rushing_yards": "12",
-        "first_downs": "2",
+        "rushing_yards": "32",
+        "first_downs": "3",
         "third_down_efficiency": "1-2",
         "fourth_down_efficiency": "0-0",
         "total_plays": "0",
-        "yards_per_play": "4.2",
+        "yards_per_play": "5.6",
         "turnovers": "1",
         "fumbles_lost": "0",
         "interceptions": "1",
@@ -120,7 +138,7 @@
         "sacks": "0-0",
         "red_zone_efficiency": "0-0",
         "completion_pct": "0",
-        "time_of_possession": " 4:50"
+        "time_of_possession": " 5:29"
       }
     },
     "scoring_plays": [
@@ -139,7 +157,6 @@
         "home_score": 0
       }
     ],
-    "situation": null,
     "attendance": 0
   },
   "games": [
@@ -209,12 +226,30 @@
       },
       "odds": null,
       "weather": null,
-      "clock": "2:11",
+      "clock": "1:32",
       "period": 1,
-      "period_detail": "2:11 - 1st",
+      "period_detail": "1:32 - 1st",
       "leaders": {
         "away": {},
         "home": {}
+      },
+      "situation": {
+        "down": 1,
+        "distance": 10,
+        "yard_line": 70,
+        "down_distance_text": "1st & 10 at BUF 30",
+        "spot_text": "1st & 10",
+        "possession_text": "BUF 30",
+        "possession": "30",
+        "possession_short": "",
+        "is_red_zone": false,
+        "home_timeouts": 3,
+        "away_timeouts": 3,
+        "last_play": {
+          "text": "B.Tuten right end to BUF 30 for 20 yards (M.Milano).",
+          "type": "Rush",
+          "yards": 20
+        }
       },
       "display_rank": 1
     },
@@ -321,6 +356,7 @@
         "away": {},
         "home": {}
       },
+      "situation": null,
       "display_rank": 2
     },
     {
@@ -426,6 +462,7 @@
         "away": {},
         "home": {}
       },
+      "situation": null,
       "display_rank": 3
     },
     {
@@ -544,6 +581,7 @@
           }
         }
       },
+      "situation": null,
       "display_rank": 4
     },
     {
@@ -667,6 +705,7 @@
           }
         }
       },
+      "situation": null,
       "display_rank": 5
     },
     {
@@ -790,6 +829,7 @@
           }
         }
       },
+      "situation": null,
       "display_rank": 6
     }
   ]
