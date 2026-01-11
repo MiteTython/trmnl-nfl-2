@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -30,14 +28,12 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git fetch origin main
+          git reset --soft origin/main
           git add docs/nfl_games.json
           if ! git diff --staged --quiet; then
             git commit -m "Update NFL scores"
-            for i in 1 2 3; do
-              git pull --rebase origin main && git push && break
-              echo "Attempt $i failed, retrying..."
-              sleep 2
-            done
+            git push origin main
           else
             echo "No changes to commit"
           fi
