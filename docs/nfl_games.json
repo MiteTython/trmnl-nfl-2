@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:34:40.317897",
+  "fetched_at": "2026-01-11T18:35:40.585083",
   "season": {
     "year": 2025,
     "type": 3,
@@ -36,7 +36,7 @@
       "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/jax.png",
       "color": "007487",
       "record": "13-4",
-      "score": 0
+      "score": 6
     },
     "venue": {
       "name": "EverBank Stadium",
@@ -71,13 +71,13 @@
             "points": 0
           },
           "home": {
-            "points": 0
+            "points": 6
           }
         }
       ],
       "total": {
         "away": 3,
-        "home": 0
+        "home": 6
       }
     },
     "odds": null,
@@ -87,29 +87,29 @@
       "precipitation": 11,
       "gust": 12
     },
-    "clock": "15:00",
+    "clock": "14:14",
     "period": 2,
-    "period_detail": "15:00 - 2nd",
+    "period_detail": "14:14 - 2nd",
     "leaders": {
       "away": {},
       "home": {}
     },
     "situation": {
-      "down": 2,
-      "distance": 3,
-      "yard_line": 97,
-      "down_distance_text": "2nd & Goal at BUF 3",
-      "spot_text": "2nd & Goal",
-      "possession_text": "BUF 3",
-      "possession": "30",
+      "down": -1,
+      "distance": 10,
+      "yard_line": 100,
+      "down_distance_text": "",
+      "spot_text": "",
+      "possession_text": "",
+      "possession": "",
       "possession_short": "",
       "is_red_zone": true,
       "home_timeouts": 3,
       "away_timeouts": 3,
       "last_play": {
-        "text": "(Shotgun) T.Lawrence pass short middle to B.Strange to BUF 3 for no gain (G.Rousseau).",
-        "type": "Pass Reception",
-        "yards": 0
+        "text": "(Shotgun) T.Lawrence pass short left to B.Thomas for 3 yards, TOUCHDOWN.",
+        "type": "Passing Touchdown",
+        "yards": 3
       }
     },
     "display_rank": 1,
@@ -140,7 +140,7 @@
         "third_down_efficiency": "1-2",
         "fourth_down_efficiency": "0-0",
         "total_plays": "0",
-        "yards_per_play": "6.8",
+        "yards_per_play": "6.4",
         "turnovers": "1",
         "fumbles_lost": "0",
         "interceptions": "1",
@@ -201,7 +201,7 @@
         "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/jax.png",
         "color": "007487",
         "record": "13-4",
-        "score": 0
+        "score": 6
       },
       "venue": {
         "name": "EverBank Stadium",
@@ -235,40 +235,40 @@
               "points": 0
             },
             "home": {
-              "points": 0
+              "points": 6
             }
           }
         ],
         "total": {
           "away": 3,
-          "home": 0
+          "home": 6
         }
       },
       "odds": null,
       "weather": null,
-      "clock": "15:00",
+      "clock": "14:14",
       "period": 2,
-      "period_detail": "15:00 - 2nd",
+      "period_detail": "14:14 - 2nd",
       "leaders": {
         "away": {},
         "home": {}
       },
       "situation": {
-        "down": 2,
-        "distance": 3,
-        "yard_line": 97,
-        "down_distance_text": "2nd & Goal at BUF 3",
-        "spot_text": "2nd & Goal",
-        "possession_text": "BUF 3",
-        "possession": "30",
+        "down": -1,
+        "distance": 10,
+        "yard_line": 100,
+        "down_distance_text": "",
+        "spot_text": "",
+        "possession_text": "",
+        "possession": "",
         "possession_short": "",
         "is_red_zone": true,
         "home_timeouts": 3,
         "away_timeouts": 3,
         "last_play": {
-          "text": "(Shotgun) T.Lawrence pass short middle to B.Strange to BUF 3 for no gain (G.Rousseau).",
-          "type": "Pass Reception",
-          "yards": 0
+          "text": "(Shotgun) T.Lawrence pass short left to B.Thomas for 3 yards, TOUCHDOWN.",
+          "type": "Passing Touchdown",
+          "yards": 3
         }
       },
       "display_rank": 1
