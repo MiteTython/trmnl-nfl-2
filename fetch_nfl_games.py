@@ -484,13 +484,11 @@ def enrich_featured_game(game, summary):
 def slim_game(game, is_featured=False):
     """Strip unused fields to minimize payload size."""
     
-    # Slim team data
+    # Slim team data - no name (use short_name), no logo (reconstruct in template)
     def slim_team(team):
         return {
-            'name': team.get('name', ''),
             'abbreviation': team.get('abbreviation', ''),
             'short_name': team.get('short_name', ''),
-            'logo': team.get('logo', ''),
             'record': team.get('record', ''),
             'score': team.get('score', 0)
         }
@@ -555,13 +553,12 @@ def slim_game(game, is_featured=False):
             'home': p.get('home', {})
         } for p in periods]
     
-    # Slim broadcaster
+    # Slim broadcaster - no logo (reconstruct in template)
     def slim_broadcasters(broadcasters):
         if not broadcasters:
             return []
-        # Only keep first broadcaster
         b = broadcasters[0] if broadcasters else {}
-        return [{'name': b.get('name', ''), 'logo': b.get('logo', '')}]
+        return [{'name': b.get('name', '')}]
     
     # Slim odds
     def slim_odds(odds):
@@ -591,14 +588,36 @@ def slim_game(game, is_featured=False):
             'condition': weather.get('condition', '')
         }
     
+    # Slim stats - remove unused fields
+    def slim_stats(stats):
+        if not stats:
+            return None
+        result = {}
+        for side in ['away', 'home']:
+            s = stats.get(side, {})
+            if s:
+                result[side] = {
+                    'total_yards': s.get('total_yards', '0'),
+                    'passing_yards': s.get('passing_yards', '0'),
+                    'rushing_yards': s.get('rushing_yards', '0'),
+                    'first_downs': s.get('first_downs', '0'),
+                    'third_down_efficiency': s.get('third_down_efficiency', '0-0'),
+                    'fourth_down_efficiency': s.get('fourth_down_efficiency', '0-0'),
+                    'red_zone_efficiency': s.get('red_zone_efficiency', '0-0'),
+                    'turnovers': s.get('turnovers', '0'),
+                    'penalties': s.get('penalties', '0-0'),
+                    'time_of_possession': s.get('time_of_possession', '0:00')
+                }
+        return result
+    
+    status = game.get('status', '')
+    
     # Build slim game
     slim = {
-        'status': game.get('status', ''),
+        'status': status,
         'start_time_pacific': game.get('start_time_pacific', ''),
         'away_team': slim_team(game.get('away_team', {})),
         'home_team': slim_team(game.get('home_team', {})),
-        'venue': slim_venue(game.get('venue', {})),
-        'broadcasters': slim_broadcasters(game.get('broadcasters', [])),
         'scores': {
             'periods': slim_periods(game.get('scores', {}).get('periods', [])),
             'total': game.get('scores', {}).get('total', {})
@@ -607,6 +626,14 @@ def slim_game(game, is_featured=False):
         'period': game.get('period', 0),
         'display_rank': game.get('display_rank', 0)
     }
+    
+    # Venue only for Scheduled and In Progress
+    if status in ['Scheduled', 'In Progress']:
+        slim['venue'] = slim_venue(game.get('venue', {}))
+    
+    # Broadcaster only for Scheduled and In Progress
+    if status in ['Scheduled', 'In Progress']:
+        slim['broadcasters'] = slim_broadcasters(game.get('broadcasters', []))
     
     # Only include if present
     if game.get('odds'):
@@ -626,7 +653,7 @@ def slim_game(game, is_featured=False):
     # Featured game extras
     if is_featured:
         if game.get('stats'):
-            slim['stats'] = game['stats']  # Keep full stats for featured
+            slim['stats'] = slim_stats(game['stats'])
         if game.get('scoring_plays'):
             slim['scoring_plays'] = slim_scoring_plays(game['scoring_plays'])
         if game.get('attendance'):
