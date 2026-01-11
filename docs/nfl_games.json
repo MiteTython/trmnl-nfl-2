@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:19:42.180711",
+  "fetched_at": "2026-01-11T18:20:44.724048",
   "season": {
     "year": 2025,
     "type": 3,
@@ -77,9 +77,9 @@
       "precipitation": 11,
       "gust": 11
     },
-    "clock": "6:00",
+    "clock": "5:25",
     "period": 1,
-    "period_detail": "6:00 - 1st",
+    "period_detail": "5:25 - 1st",
     "leaders": {
       "away": {},
       "home": {}
@@ -112,7 +112,7 @@
         "third_down_efficiency": "1-2",
         "fourth_down_efficiency": "0-0",
         "total_plays": "0",
-        "yards_per_play": "4.5",
+        "yards_per_play": "3.9",
         "turnovers": "0",
         "fumbles_lost": "0",
         "interceptions": "0",
@@ -120,7 +120,7 @@
         "sacks": "0-0",
         "red_zone_efficiency": "0-0",
         "completion_pct": "0",
-        "time_of_possession": " 3:22"
+        "time_of_possession": " 3:53"
       }
     },
     "scoring_plays": [],
@@ -194,9 +194,9 @@
       },
       "odds": null,
       "weather": null,
-      "clock": "6:00",
+      "clock": "5:25",
       "period": 1,
-      "period_detail": "6:00 - 1st",
+      "period_detail": "5:25 - 1st",
       "leaders": {
         "away": {},
         "home": {}
