@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T15:10:41.697270",
+  "fetched_at": "2026-01-11T15:15:45.151416",
   "season": {
     "year": 2025,
     "type": 3,
@@ -573,7 +573,7 @@
       },
       "odds": {
         "spread": "JAX -1.5",
-        "over_under": 50.5,
+        "over_under": 51.5,
         "provider": "Draft Kings"
       },
       "weather": null,
