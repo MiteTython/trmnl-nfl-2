@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:16:42.370425",
+  "fetched_at": "2026-01-11T18:17:43.843331",
   "season": {
     "year": 2025,
     "type": 3,
@@ -105,14 +105,14 @@
         "time_of_possession": " 5:38"
       },
       "home": {
-        "total_yards": "2",
+        "total_yards": "5",
         "passing_yards": "5",
-        "rushing_yards": "-3",
+        "rushing_yards": "0",
         "first_downs": "0",
         "third_down_efficiency": "0-1",
         "fourth_down_efficiency": "0-0",
         "total_plays": "0",
-        "yards_per_play": ".7",
+        "yards_per_play": "1.2",
         "turnovers": "0",
         "fumbles_lost": "0",
         "interceptions": "0",
