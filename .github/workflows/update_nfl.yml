@@ -11,12 +11,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install requests
+      - name: Pull latest changes
+        run: git pull --rebase origin main
       - name: Fetch NFL data
         env:
           SPORTSBLAZE_API_KEY: ${{ secrets.SPORTSBLAZE_API_KEY }}
