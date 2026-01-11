@@ -1,36 +1,40 @@
-name: Update NFL Scoreboard
+name: Update NFL Scores
 
 on:
-  schedule:
-    - cron: "*/5 * * * *"
   workflow_dispatch:
+  repository_dispatch:
+    types: [cronjob]
 
 permissions:
   contents: write
 
+concurrency:
+  group: nfl-update
+  cancel-in-progress: true
+
 jobs:
-  update-scores:
+  update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install requests
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
-      - name: Fetch NFL data
-        env:
-          SPORTSBLAZE_API_KEY: ${{ secrets.SPORTSBLAZE_API_KEY }}
+      - name: Run NFL updater
         run: python fetch_nfl_games.py
 
       - name: Commit and push if changed
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Update NFL scores
-          file_pattern: docs/nfl_games.json
+        run: |
+          git config user.name "actions-user"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Update NFL scores"
+          git push
