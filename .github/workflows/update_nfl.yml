@@ -2,7 +2,7 @@ name: Update NFL Scoreboard
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # every 5 minutes (UTC)
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -27,23 +27,10 @@ jobs:
       - name: Fetch NFL data
         env:
           SPORTSBLAZE_API_KEY: ${{ secrets.SPORTSBLAZE_API_KEY }}
-        run: |
-          echo "===== FETCH START $(date -u) ====="
-          python fetch_nfl_games.py
-          echo "===== FETCH END $(date -u) ====="
-
-      - name: Show file status
-        run: git status
+        run: python fetch_nfl_games.py
 
       - name: Commit and push if changed
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          if git diff --quiet; then
-            echo "No changes to commit."
-          else
-            git add docs/nfl_games.json
-            git commit -m "Update NFL scores"
-            git push
-          fi
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update NFL scores
+          file_pattern: docs/nfl_games.json
