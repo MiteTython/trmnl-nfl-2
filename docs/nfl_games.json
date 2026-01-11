@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:39:42.384996",
+  "fetched_at": "2026-01-11T18:40:42.615825",
   "season": {
     "year": 2025,
     "type": 3,
@@ -88,29 +88,29 @@
         "precipitation": 11,
         "gust": 12
       },
-      "clock": "14:14",
+      "clock": "14:05",
       "period": 2,
-      "period_detail": "14:14 - 2nd",
+      "period_detail": "14:05 - 2nd",
       "leaders": {
         "away": {},
         "home": {}
       },
       "situation": {
-        "down": -1,
-        "distance": 0,
-        "yard_line": 85,
-        "down_distance_text": "",
-        "spot_text": "",
-        "possession_text": "",
+        "down": 1,
+        "distance": 10,
+        "yard_line": 64,
+        "down_distance_text": "1st & 10 at BUF 36",
+        "spot_text": "1st & 10",
+        "possession_text": "BUF 36",
         "possession": "",
         "possession_short": "",
-        "is_red_zone": true,
+        "is_red_zone": false,
         "home_timeouts": 3,
         "away_timeouts": 3,
         "last_play": {
-          "text": "Official Timeout at 14:14.",
-          "type": "Official Timeout",
-          "yards": 0
+          "text": "C.Little kicks 65 yards from JAX 35 to BUF 0. R.Davis to BUF 35 for 35 yards (L.Allen; M.Brown). FUMBLES (L.Allen), RECOVERED by JAX-D.Lloyd at BUF 36. BUF-R.Davis was injured during the play.",
+          "type": "Kickoff",
+          "yards": 35
         }
       },
       "display_rank": 1,
@@ -124,14 +124,14 @@
           "fourth_down_efficiency": "0-0",
           "total_plays": "0",
           "yards_per_play": "4.8",
-          "turnovers": "0",
-          "fumbles_lost": "0",
+          "turnovers": "1",
+          "fumbles_lost": "1",
           "interceptions": "0",
           "penalties": "3-20",
           "sacks": "0-0",
           "red_zone_efficiency": "0-0",
           "completion_pct": "0",
-          "time_of_possession": " 7:59"
+          "time_of_possession": " 8:08"
         },
         "home": {
           "total_yards": "92",
