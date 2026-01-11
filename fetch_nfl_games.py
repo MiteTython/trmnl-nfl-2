@@ -481,6 +481,167 @@ def enrich_featured_game(game, summary):
     return game
 
 
+def slim_game(game, is_featured=False):
+    """Strip unused fields to minimize payload size."""
+    
+    # Slim team data
+    def slim_team(team):
+        return {
+            'name': team.get('name', ''),
+            'abbreviation': team.get('abbreviation', ''),
+            'short_name': team.get('short_name', ''),
+            'logo': team.get('logo', ''),
+            'record': team.get('record', ''),
+            'score': team.get('score', 0)
+        }
+    
+    # Slim leader data (only keep what template uses)
+    def slim_leader(leader):
+        if not leader:
+            return None
+        return {
+            'short_name': leader.get('short_name', ''),
+            'display_value': leader.get('display_value', '')
+        }
+    
+    def slim_leaders(leaders):
+        if not leaders:
+            return {}
+        result = {}
+        for side in ['away', 'home']:
+            side_leaders = leaders.get(side, {})
+            if side_leaders:
+                result[side] = {}
+                for cat in ['passing', 'rushing', 'receiving']:
+                    if side_leaders.get(cat):
+                        result[side][cat] = slim_leader(side_leaders[cat])
+        return result
+    
+    # Slim situation (only keep what template uses)
+    def slim_situation(sit):
+        if not sit:
+            return None
+        result = {
+            'down_distance_text': sit.get('down_distance_text', ''),
+            'possession_text': sit.get('possession_text', ''),
+            'possession': sit.get('possession', ''),
+            'possession_short': sit.get('possession_short', ''),
+            'is_red_zone': sit.get('is_red_zone', False)
+        }
+        if sit.get('last_play'):
+            result['last_play'] = {'text': sit['last_play'].get('text', '')}
+        return result
+    
+    # Slim scoring plays (only for featured game)
+    def slim_scoring_plays(plays):
+        if not plays:
+            return []
+        return [{
+            'period': p.get('period', 0),
+            'team': {'abbreviation': p.get('team', {}).get('abbreviation', '')},
+            'type': p.get('type', ''),
+            'text': p.get('text', ''),
+            'away_score': p.get('away_score', 0),
+            'home_score': p.get('home_score', 0)
+        } for p in plays]
+    
+    # Slim periods (remove "type" field)
+    def slim_periods(periods):
+        if not periods:
+            return []
+        return [{
+            'number': p.get('number', 0),
+            'away': p.get('away', {}),
+            'home': p.get('home', {})
+        } for p in periods]
+    
+    # Slim broadcaster
+    def slim_broadcasters(broadcasters):
+        if not broadcasters:
+            return []
+        # Only keep first broadcaster
+        b = broadcasters[0] if broadcasters else {}
+        return [{'name': b.get('name', ''), 'logo': b.get('logo', '')}]
+    
+    # Slim odds
+    def slim_odds(odds):
+        if not odds:
+            return None
+        return {
+            'spread': odds.get('spread', ''),
+            'over_under': odds.get('over_under', 0)
+        }
+    
+    # Slim venue
+    def slim_venue(venue):
+        if not venue:
+            return {}
+        return {
+            'name': venue.get('name', ''),
+            'city': venue.get('city', ''),
+            'state': venue.get('state', '')
+        }
+    
+    # Slim weather
+    def slim_weather(weather):
+        if not weather:
+            return None
+        return {
+            'temperature': weather.get('temperature', 0),
+            'condition': weather.get('condition', '')
+        }
+    
+    # Build slim game
+    slim = {
+        'status': game.get('status', ''),
+        'start_time_pacific': game.get('start_time_pacific', ''),
+        'away_team': slim_team(game.get('away_team', {})),
+        'home_team': slim_team(game.get('home_team', {})),
+        'venue': slim_venue(game.get('venue', {})),
+        'broadcasters': slim_broadcasters(game.get('broadcasters', [])),
+        'scores': {
+            'periods': slim_periods(game.get('scores', {}).get('periods', [])),
+            'total': game.get('scores', {}).get('total', {})
+        },
+        'clock': game.get('clock', ''),
+        'period': game.get('period', 0),
+        'display_rank': game.get('display_rank', 0)
+    }
+    
+    # Only include if present
+    if game.get('odds'):
+        slim['odds'] = slim_odds(game['odds'])
+    
+    if game.get('weather'):
+        slim['weather'] = slim_weather(game['weather'])
+    
+    if game.get('leaders'):
+        leaders = slim_leaders(game['leaders'])
+        if leaders:
+            slim['leaders'] = leaders
+    
+    if game.get('situation'):
+        slim['situation'] = slim_situation(game['situation'])
+    
+    # Featured game extras
+    if is_featured:
+        if game.get('stats'):
+            slim['stats'] = game['stats']  # Keep full stats for featured
+        if game.get('scoring_plays'):
+            slim['scoring_plays'] = slim_scoring_plays(game['scoring_plays'])
+        if game.get('attendance'):
+            slim['attendance'] = game['attendance']
+    
+    # Season info only for featured (others use top-level)
+    if is_featured:
+        slim['season'] = {
+            'type_name': game.get('season', {}).get('type_name', ''),
+            'week': game.get('season', {}).get('week', 0)
+        }
+    
+    return slim
+
+
 def rank_games(games):
     """Rank games: In Progress first, then Final, then Scheduled.
     
@@ -566,21 +727,35 @@ def main():
     season_info = {
         'year': scoreboard.get('season', {}).get('year', 0),
         'type': scoreboard.get('season', {}).get('type', 0),
+        'type_name': 'Postseason' if scoreboard.get('season', {}).get('type') == 3 else 'Regular Season',
         'week': scoreboard.get('week', {}).get('number', 0)
     }
+    
+    # Slim all games for minimal payload (limit to 4)
+    slim_games = []
+    for i, game in enumerate(all_games[:4]):
+        is_featured = (i == 0)  # First game is featured
+        slim_games.append(slim_game(game, is_featured=is_featured))
     
     # Save to JSON - no more featured_game duplicate
     os.makedirs('docs', exist_ok=True)
     output = {
         'fetched_at': datetime.now().isoformat(),
         'season': season_info,
-        'games': all_games
+        'games': slim_games
     }
     
     with open('docs/nfl_games.json', 'w') as f:
+        json.dump(output, f, separators=(',', ':'))  # No whitespace for smaller payload
+    
+    # Also save pretty version for debugging
+    with open('docs/nfl_games_debug.json', 'w') as f:
         json.dump(output, f, indent=2)
     
-    print(f"\nSaved to docs/nfl_games.json")
+    # Report size
+    import os as os_module
+    size = os_module.path.getsize('docs/nfl_games.json')
+    print(f"\nSaved to docs/nfl_games.json ({size:,} bytes / {size/1024:.1f} KB)")
 
 
 if __name__ == "__main__":
