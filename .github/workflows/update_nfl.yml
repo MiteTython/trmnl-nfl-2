@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -25,13 +27,8 @@ jobs:
           SPORTSBLAZE_API_KEY: ${{ secrets.SPORTSBLAZE_API_KEY }}
         run: python fetch_nfl_games.py
       - name: Commit and push
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add docs/nfl_games.json
-          if ! git diff --staged --quiet; then
-            git commit -m "Update NFL scores"
-            git push --force origin main
-          else
-            echo "No changes to commit"
-          fi
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update NFL scores
+          file_pattern: docs/nfl_games.json
+          push_options: '--force'
