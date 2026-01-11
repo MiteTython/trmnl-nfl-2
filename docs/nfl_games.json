@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:40:42.615825",
+  "fetched_at": "2026-01-11T18:41:42.011397",
   "season": {
     "year": 2025,
     "type": 3,
@@ -96,21 +96,21 @@
         "home": {}
       },
       "situation": {
-        "down": 1,
-        "distance": 10,
-        "yard_line": 64,
-        "down_distance_text": "1st & 10 at BUF 36",
-        "spot_text": "1st & 10",
-        "possession_text": "BUF 36",
-        "possession": "",
+        "down": 2,
+        "distance": 3,
+        "yard_line": 71,
+        "down_distance_text": "2nd & 3 at BUF 29",
+        "spot_text": "2nd & 3",
+        "possession_text": "BUF 29",
+        "possession": "30",
         "possession_short": "",
         "is_red_zone": false,
         "home_timeouts": 3,
         "away_timeouts": 3,
         "last_play": {
-          "text": "C.Little kicks 65 yards from JAX 35 to BUF 0. R.Davis to BUF 35 for 35 yards (L.Allen; M.Brown). FUMBLES (L.Allen), RECOVERED by JAX-D.Lloyd at BUF 36. BUF-R.Davis was injured during the play.",
-          "type": "Kickoff",
-          "yards": 35
+          "text": "(Shotgun) T.Etienne right end to BUF 29 for 7 yards (Ta.Johnson).",
+          "type": "Rush",
+          "yards": 7
         }
       },
       "display_rank": 1,
@@ -134,14 +134,14 @@
           "time_of_possession": " 8:08"
         },
         "home": {
-          "total_yards": "92",
+          "total_yards": "99",
           "passing_yards": "33",
-          "rushing_yards": "59",
+          "rushing_yards": "66",
           "first_downs": "6",
           "third_down_efficiency": "1-2",
           "fourth_down_efficiency": "0-0",
           "total_plays": "0",
-          "yards_per_play": "6.1",
+          "yards_per_play": "6.2",
           "turnovers": "1",
           "fumbles_lost": "0",
           "interceptions": "1",
