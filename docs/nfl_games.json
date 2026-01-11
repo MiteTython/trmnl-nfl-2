@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-01-11T18:21:42.322496",
+  "fetched_at": "2026-01-11T18:22:41.221878",
   "season": {
     "year": 2025,
     "type": 3,
@@ -77,9 +77,9 @@
       "precipitation": 11,
       "gust": 12
     },
-    "clock": "5:15",
+    "clock": "4:35",
     "period": 1,
-    "period_detail": "5:15 - 1st",
+    "period_detail": "4:35 - 1st",
     "leaders": {
       "away": {},
       "home": {}
@@ -87,14 +87,14 @@
     "display_rank": 1,
     "stats": {
       "away": {
-        "total_yards": "47",
-        "passing_yards": "36",
-        "rushing_yards": "11",
+        "total_yards": "51",
+        "passing_yards": "37",
+        "rushing_yards": "14",
         "first_downs": "2",
         "third_down_efficiency": "1-2",
         "fourth_down_efficiency": "0-0",
         "total_plays": "0",
-        "yards_per_play": "5.9",
+        "yards_per_play": "5.1",
         "turnovers": "0",
         "fumbles_lost": "0",
         "interceptions": "0",
@@ -102,7 +102,7 @@
         "sacks": "0-0",
         "red_zone_efficiency": "0-0",
         "completion_pct": "0",
-        "time_of_possession": " 5:38"
+        "time_of_possession": " 6:18"
       },
       "home": {
         "total_yards": "27",
@@ -194,9 +194,9 @@
       },
       "odds": null,
       "weather": null,
-      "clock": "5:15",
+      "clock": "4:35",
       "period": 1,
-      "period_detail": "5:15 - 1st",
+      "period_detail": "4:35 - 1st",
       "leaders": {
         "away": {},
         "home": {}
