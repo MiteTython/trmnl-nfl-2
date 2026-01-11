@@ -1,38 +1,33 @@
 {
   "featured_game": {
-    "id": "67e43b4e-2e4f-5fe3-bb18-9b45bc27b697",
-    "status": "Final",
-    "start_time_pacific": "2026-01-10 01:30 PM PST",
-    "start_time_utc": "2026-01-10T21:30:00Z",
+    "id": "9ce0e5a6-5683-578a-b40a-9b7f43081aea",
+    "status": "In Progress",
+    "start_time_pacific": "2026-01-10 05:00 PM PST",
+    "start_time_utc": "2026-01-11T01:00:00Z",
     "season": {
       "year": 2025,
       "type": "Playoffs",
       "week": 1
     },
     "away_team": {
-      "id": "9205065d-98c3-504f-8462-e41eaf2df541",
-      "name": "Los Angeles Rams",
-      "logo": "https://static.www.nfl.com/image/private/f_auto/league/ayvwcmluj2ohkdlbiegi"
+      "id": "76a9d3d3-31bb-542e-afe3-54d634a80a3f",
+      "name": "Green Bay Packers",
+      "logo": "https://static.www.nfl.com/image/private/f_auto/league/gppfvr7n8gljgjaqux2x"
     },
     "home_team": {
-      "id": "c29a95ad-52e4-534a-915a-6023d2ea3b23",
-      "name": "Carolina Panthers",
-      "logo": "https://static.www.nfl.com/image/private/f_auto/league/ervfzgrqdpnc7lh5gqwq"
+      "id": "c1a817c7-b5ef-58f9-a24b-3f3950b67707",
+      "name": "Chicago Bears",
+      "logo": "https://static.www.nfl.com/image/private/f_auto/league/ijrplti0kmzsyoaikhv1"
     },
     "venue": {
-      "name": "Bank of America Stadium",
-      "location": "Charlotte"
+      "name": "Soldier Field",
+      "location": "Chicago"
     },
     "broadcasters": [
       {
-        "name": "FOX",
+        "name": "Prime Video",
         "type": "TV",
-        "logo": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Fox_Broadcasting_Company_logo_%282019%29.svg"
-      },
-      {
-        "name": "FOX Deportes",
-        "type": "TV",
-        "logo": ""
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/9/90/Prime_Video_logo_%282024%29.svg"
       }
     ],
     "scores": {
@@ -44,78 +39,179 @@
             "points": 7
           },
           "home": {
-            "points": 0
+            "points": 3
           }
         },
         {
           "number": 2,
           "type": "Regulation",
           "away": {
-            "points": 10
+            "points": 0
           },
           "home": {
-            "points": 14
+            "points": 0
           }
         },
         {
           "number": 3,
           "type": "Regulation",
           "away": {
-            "points": 3
+            "points": 0
           },
           "home": {
-            "points": 3
+            "points": 0
           }
         },
         {
           "number": 4,
           "type": "Regulation",
           "away": {
-            "points": 14
+            "points": 0
           },
           "home": {
-            "points": 14
+            "points": 0
+          }
+        },
+        {
+          "number": 5,
+          "type": "Overtime",
+          "away": {
+            "points": 0
+          },
+          "home": {
+            "points": 0
           }
         }
       ],
       "total": {
         "away": {
-          "points": 34
+          "points": 7
         },
         "home": {
-          "points": 31
+          "points": 3
         }
       }
     },
     "stats": {
       "away": {
-        "passing_yards": 295,
-        "rushing_yards": 116,
-        "first_downs": 21,
-        "third_down_attempts": 13,
+        "passing_yards": 97,
+        "rushing_yards": 57,
+        "first_downs": 7,
+        "third_down_attempts": 3,
         "third_down_conversions": 3,
+        "fourth_down_attempts": 0,
+        "fourth_down_conversions": 0,
+        "turnovers": 0,
+        "punts": 0,
+        "time_of_possession": "9:04"
+      },
+      "home": {
+        "passing_yards": 56,
+        "rushing_yards": 33,
+        "first_downs": 5,
+        "third_down_attempts": 7,
+        "third_down_conversions": 4,
         "fourth_down_attempts": 2,
         "fourth_down_conversions": 1,
         "turnovers": 1,
-        "punts": 4,
-        "time_of_possession": "31:46"
-      },
-      "home": {
-        "passing_yards": 250,
-        "rushing_yards": 83,
-        "first_downs": 21,
-        "third_down_attempts": 12,
-        "third_down_conversions": 5,
-        "fourth_down_attempts": 3,
-        "fourth_down_conversions": 0,
-        "turnovers": 2,
-        "punts": 3,
-        "time_of_possession": "28:14"
+        "punts": 0,
+        "time_of_possession": "12:41"
       }
     },
     "display_rank": 1
   },
   "games": [
+    {
+      "id": "9ce0e5a6-5683-578a-b40a-9b7f43081aea",
+      "status": "In Progress",
+      "start_time_pacific": "2026-01-10 05:00 PM PST",
+      "start_time_utc": "2026-01-11T01:00:00Z",
+      "season": {
+        "year": 2025,
+        "type": "Playoffs",
+        "week": 1
+      },
+      "away_team": {
+        "id": "76a9d3d3-31bb-542e-afe3-54d634a80a3f",
+        "name": "Green Bay Packers",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/gppfvr7n8gljgjaqux2x"
+      },
+      "home_team": {
+        "id": "c1a817c7-b5ef-58f9-a24b-3f3950b67707",
+        "name": "Chicago Bears",
+        "logo": "https://static.www.nfl.com/image/private/f_auto/league/ijrplti0kmzsyoaikhv1"
+      },
+      "venue": {
+        "name": "Soldier Field",
+        "location": "Chicago"
+      },
+      "broadcasters": [
+        {
+          "name": "Prime Video",
+          "type": "TV",
+          "logo": "https://upload.wikimedia.org/wikipedia/commons/9/90/Prime_Video_logo_%282024%29.svg"
+        }
+      ],
+      "scores": {
+        "periods": [
+          {
+            "number": 1,
+            "type": "Regulation",
+            "away": {
+              "points": 7
+            },
+            "home": {
+              "points": 3
+            }
+          },
+          {
+            "number": 2,
+            "type": "Regulation",
+            "away": {
+              "points": 0
+            },
+            "home": {
+              "points": 0
+            }
+          },
+          {
+            "number": 3,
+            "type": "Regulation",
+            "away": {
+              "points": 0
+            },
+            "home": {
+              "points": 0
+            }
+          },
+          {
+            "number": 4,
+            "type": "Regulation",
+            "away": {
+              "points": 0
+            },
+            "home": {
+              "points": 0
+            }
+          },
+          {
+            "number": 5,
+            "type": "Overtime",
+            "away": {
+              "points": 0
+            },
+            "home": {
+              "points": 0
+            }
+          }
+        ],
+        "final": {
+          "away": 7,
+          "home": 3
+        }
+      },
+      "display_rank": 1
+    },
     {
       "id": "67e43b4e-2e4f-5fe3-bb18-9b45bc27b697",
       "status": "Final",
@@ -200,39 +296,6 @@
           "home": 31
         }
       },
-      "display_rank": 1
-    },
-    {
-      "id": "9ce0e5a6-5683-578a-b40a-9b7f43081aea",
-      "status": "Scheduled",
-      "start_time_pacific": "2026-01-10 05:00 PM PST",
-      "start_time_utc": "2026-01-11T01:00:00Z",
-      "season": {
-        "year": 2025,
-        "type": "Playoffs",
-        "week": 1
-      },
-      "away_team": {
-        "id": "76a9d3d3-31bb-542e-afe3-54d634a80a3f",
-        "name": "Green Bay Packers",
-        "logo": "https://static.www.nfl.com/image/private/f_auto/league/gppfvr7n8gljgjaqux2x"
-      },
-      "home_team": {
-        "id": "c1a817c7-b5ef-58f9-a24b-3f3950b67707",
-        "name": "Chicago Bears",
-        "logo": "https://static.www.nfl.com/image/private/f_auto/league/ijrplti0kmzsyoaikhv1"
-      },
-      "venue": {
-        "name": "Soldier Field",
-        "location": "Chicago"
-      },
-      "broadcasters": [
-        {
-          "name": "Prime Video",
-          "type": "TV",
-          "logo": "https://upload.wikimedia.org/wikipedia/commons/9/90/Prime_Video_logo_%282024%29.svg"
-        }
-      ],
       "display_rank": 2
     },
     {
