@@ -145,6 +145,49 @@ def parse_team_leaders(leaders_data):
     return result
 
 
+def parse_situation_from_scoreboard(situation_data, home_abbrev, away_abbrev):
+    """Parse live game situation from scoreboard API.
+    
+    The scoreboard format has slightly different field names than summary.
+    """
+    if not situation_data:
+        return None
+    
+    last_play = situation_data.get('lastPlay', {})
+    
+    # Get possession team abbreviation
+    poss_id = situation_data.get('possession', '')
+    poss_abbrev = ''
+    
+    # The possession field contains team ID, need to map it
+    # But we also have shortDownDistanceText which often includes the team
+    short_text = situation_data.get('shortDownDistanceText', '')
+    possession_text = situation_data.get('possessionText', '')
+    
+    # Try to extract possession from the data
+    if situation_data.get('team'):
+        poss_abbrev = situation_data.get('team', {}).get('abbreviation', '')
+    
+    return {
+        'down': situation_data.get('down', 0),
+        'distance': situation_data.get('distance', 0),
+        'yard_line': situation_data.get('yardLine', 0),
+        'down_distance_text': situation_data.get('downDistanceText', ''),
+        'spot_text': short_text,
+        'possession_text': possession_text,
+        'possession': poss_id,
+        'possession_short': poss_abbrev,
+        'is_red_zone': situation_data.get('isRedZone', False),
+        'home_timeouts': situation_data.get('homeTimeouts', 3),
+        'away_timeouts': situation_data.get('awayTimeouts', 3),
+        'last_play': {
+            'text': last_play.get('text', ''),
+            'type': last_play.get('type', {}).get('text', '') if isinstance(last_play.get('type'), dict) else '',
+            'yards': last_play.get('statYardage', 0)
+        } if last_play else None
+    }
+
+
 def parse_game(event_data):
     """Parse ESPN event data into our format."""
     competition = event_data.get('competitions', [{}])[0]
@@ -156,6 +199,10 @@ def parse_game(event_data):
     
     home_team_info = home_data.get('team', {})
     away_team_info = away_data.get('team', {})
+    
+    # Get abbreviations for situation parsing
+    home_abbrev = home_team_info.get('abbreviation', '')
+    away_abbrev = away_team_info.get('abbreviation', '')
     
     # Get scores
     home_score = int(home_data.get('score', 0) or 0)
@@ -182,6 +229,15 @@ def parse_game(event_data):
             'away': {'points': int(a.get('value', 0))},
             'home': {'points': int(h.get('value', 0))}
         })
+    
+    # Parse situation from scoreboard (for in-progress games)
+    situation = None
+    if status == 'In Progress':
+        situation = parse_situation_from_scoreboard(
+            competition.get('situation'),
+            home_abbrev,
+            away_abbrev
+        )
     
     # Build game object
     game = {
@@ -239,7 +295,8 @@ def parse_game(event_data):
         'leaders': {
             'away': parse_team_leaders(away_data.get('leaders', [])),
             'home': parse_team_leaders(home_data.get('leaders', []))
-        }
+        },
+        'situation': situation
     }
     
     return game
@@ -310,8 +367,8 @@ def parse_scoring_plays(scoring_plays):
     return plays
 
 
-def parse_situation(situation_data):
-    """Parse live game situation."""
+def parse_situation_from_summary(situation_data):
+    """Parse live game situation from summary API."""
     if not situation_data:
         return None
     
@@ -323,16 +380,17 @@ def parse_situation(situation_data):
         'yard_line': situation_data.get('yardLine', 0),
         'down_distance_text': situation_data.get('downDistanceText', ''),
         'spot_text': situation_data.get('shortDownDistanceText', ''),
-        'possession': {
-            'id': situation_data.get('possession', ''),
-            'team': situation_data.get('team', {}).get('abbreviation', '') if situation_data.get('team') else ''
-        },
+        'possession_text': situation_data.get('possessionText', ''),
+        'possession': situation_data.get('possession', ''),
+        'possession_short': situation_data.get('team', {}).get('abbreviation', '') if situation_data.get('team') else '',
         'is_red_zone': situation_data.get('isRedZone', False),
+        'home_timeouts': situation_data.get('homeTimeouts', 3),
+        'away_timeouts': situation_data.get('awayTimeouts', 3),
         'last_play': {
             'text': last_play.get('text', ''),
-            'type': last_play.get('type', {}).get('text', '') if last_play.get('type') else '',
+            'type': last_play.get('type', {}).get('text', '') if isinstance(last_play.get('type'), dict) else '',
             'yards': last_play.get('statYardage', 0)
-        }
+        } if last_play else None
     }
 
 
@@ -386,8 +444,10 @@ def enrich_featured_game(game, summary):
     # Add scoring plays
     game['scoring_plays'] = parse_scoring_plays(summary.get('scoringPlays', []))
     
-    # Add live situation (for in-progress games)
-    game['situation'] = parse_situation(summary.get('situation'))
+    # Add/update live situation from summary (more detailed than scoreboard)
+    summary_situation = parse_situation_from_summary(summary.get('situation'))
+    if summary_situation:
+        game['situation'] = summary_situation
     
     # Add game leaders from summary (more detailed than scoreboard)
     if summary.get('leaders'):
@@ -472,6 +532,9 @@ def main():
     for event in events:
         game = parse_game(event)
         all_games.append(game)
+        # Debug: print situation if in progress
+        if game['status'] == 'In Progress' and game.get('situation'):
+            print(f"  {game['short_name']}: {game['situation'].get('down_distance_text', 'No situation')}")
     
     # Rank games
     all_games = rank_games(all_games)
@@ -491,6 +554,8 @@ def main():
         if summary:
             featured_game = enrich_featured_game(rank1_game.copy(), summary)
             print("  Loaded detailed stats, scoring plays, and game leaders")
+            if featured_game.get('situation'):
+                print(f"  Situation: {featured_game['situation'].get('down_distance_text', 'N/A')}")
         else:
             print("  Could not load summary, using scoreboard data")
             featured_game = rank1_game
