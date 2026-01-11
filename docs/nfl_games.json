@@ -46,7 +46,7 @@
           "number": 2,
           "type": "Regulation",
           "away": {
-            "points": 0
+            "points": 14
           },
           "home": {
             "points": 0
@@ -85,7 +85,7 @@
       ],
       "total": {
         "away": {
-          "points": 7
+          "points": 21
         },
         "home": {
           "points": 3
@@ -94,28 +94,28 @@
     },
     "stats": {
       "away": {
-        "passing_yards": 97,
-        "rushing_yards": 57,
-        "first_downs": 7,
-        "third_down_attempts": 3,
-        "third_down_conversions": 3,
-        "fourth_down_attempts": 0,
-        "fourth_down_conversions": 0,
-        "turnovers": 0,
-        "punts": 0,
-        "time_of_possession": "9:04"
-      },
-      "home": {
-        "passing_yards": 56,
-        "rushing_yards": 33,
-        "first_downs": 5,
+        "passing_yards": 138,
+        "rushing_yards": 91,
+        "first_downs": 12,
         "third_down_attempts": 7,
         "third_down_conversions": 4,
         "fourth_down_attempts": 2,
+        "fourth_down_conversions": 2,
+        "turnovers": 0,
+        "punts": 0,
+        "time_of_possession": "15:16"
+      },
+      "home": {
+        "passing_yards": 78,
+        "rushing_yards": 44,
+        "first_downs": 6,
+        "third_down_attempts": 9,
+        "third_down_conversions": 4,
+        "fourth_down_attempts": 4,
         "fourth_down_conversions": 1,
         "turnovers": 1,
         "punts": 0,
-        "time_of_possession": "12:41"
+        "time_of_possession": "15:36"
       }
     },
     "display_rank": 1
@@ -168,7 +168,7 @@
             "number": 2,
             "type": "Regulation",
             "away": {
-              "points": 0
+              "points": 14
             },
             "home": {
               "points": 0
@@ -206,7 +206,7 @@
           }
         ],
         "final": {
-          "away": 7,
+          "away": 21,
           "home": 3
         }
       },
