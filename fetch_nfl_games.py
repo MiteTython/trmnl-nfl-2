@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Fetch NFL games from ESPN API
+Fetch NFL games from ESPN API - Full Data Version
+Pulls all available data from ESPN for the featured game
 """
 import requests
 import json
@@ -14,7 +15,7 @@ SUMMARY_URL = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/summar
 # Broadcaster logo lookups (ESPN doesn't provide good ones)
 NETWORK_LOGOS = {
     "ESPN": "https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg",
-    "NBC": "https://upload.wikimedia.org/wikipedia/commons/d/d3/NBCUniversal_Peacock_Logo.svg",
+    "NBC": "https://upload.wikimedia.org/wikipedia/commons/d/3/NBCUniversal_Peacock_Logo.svg",
     "FOX": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Fox_Broadcasting_Company_logo_%282019%29.svg",
     "CBS": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Paramount_Plus.svg",
     "ABC": "https://upload.wikimedia.org/wikipedia/commons/2/2f/ABC-2021-LOGO.svg",
@@ -146,25 +147,17 @@ def parse_team_leaders(leaders_data):
 
 
 def parse_situation_from_scoreboard(situation_data, home_abbrev, away_abbrev):
-    """Parse live game situation from scoreboard API.
-    
-    The scoreboard format has slightly different field names than summary.
-    """
+    """Parse live game situation from scoreboard API."""
     if not situation_data:
         return None
     
     last_play = situation_data.get('lastPlay', {})
-    
-    # Get possession team abbreviation
     poss_id = situation_data.get('possession', '')
     poss_abbrev = ''
     
-    # The possession field contains team ID, need to map it
-    # But we also have shortDownDistanceText which often includes the team
     short_text = situation_data.get('shortDownDistanceText', '')
     possession_text = situation_data.get('possessionText', '')
     
-    # Try to extract possession from the data
     if situation_data.get('team'):
         poss_abbrev = situation_data.get('team', {}).get('abbreviation', '')
     
@@ -193,32 +186,26 @@ def parse_game(event_data):
     competition = event_data.get('competitions', [{}])[0]
     competitors = competition.get('competitors', [])
     
-    # ESPN puts home team first in competitors, away second
     home_data = next((c for c in competitors if c.get('homeAway') == 'home'), {})
     away_data = next((c for c in competitors if c.get('homeAway') == 'away'), {})
     
     home_team_info = home_data.get('team', {})
     away_team_info = away_data.get('team', {})
     
-    # Get abbreviations for situation parsing
     home_abbrev = home_team_info.get('abbreviation', '')
     away_abbrev = away_team_info.get('abbreviation', '')
     
-    # Get scores
     home_score = int(home_data.get('score', 0) or 0)
     away_score = int(away_data.get('score', 0) or 0)
     
-    # Get records
     home_records = home_data.get('records', [])
     away_records = away_data.get('records', [])
     home_record = next((r.get('summary', '') for r in home_records if r.get('type') == 'total'), '')
     away_record = next((r.get('summary', '') for r in away_records if r.get('type') == 'total'), '')
     
-    # Parse status
     status_data = competition.get('status', {})
     status = parse_status(status_data)
     
-    # Get period scores from linescores if available
     periods = []
     home_linescores = home_data.get('linescores', [])
     away_linescores = away_data.get('linescores', [])
@@ -230,7 +217,6 @@ def parse_game(event_data):
             'home': {'points': int(h.get('value', 0))}
         })
     
-    # Parse situation from scoreboard (for in-progress games)
     situation = None
     if status == 'In Progress':
         situation = parse_situation_from_scoreboard(
@@ -239,7 +225,6 @@ def parse_game(event_data):
             away_abbrev
         )
     
-    # Build game object
     game = {
         'id': event_data.get('id', ''),
         'status': status,
@@ -302,6 +287,10 @@ def parse_game(event_data):
     return game
 
 
+# ============================================================================
+# FULL DATA EXTRACTION FROM SUMMARY ENDPOINT
+# ============================================================================
+
 def extract_stat(statistics, stat_name):
     """Extract a specific stat from ESPN statistics array."""
     for stat in statistics:
@@ -310,10 +299,9 @@ def extract_stat(statistics, stat_name):
     return '0'
 
 
-def parse_detailed_stats(boxscore):
-    """Parse detailed team stats from boxscore."""
+def parse_full_team_stats(boxscore):
+    """Parse ALL team stats from boxscore."""
     teams = boxscore.get('teams', [])
-    
     stats = {'away': {}, 'home': {}}
     
     for team_data in teams:
@@ -323,79 +311,286 @@ def parse_detailed_stats(boxscore):
             
         team_stats = team_data.get('statistics', [])
         
-        stats[side] = {
-            'total_yards': extract_stat(team_stats, 'totalYards'),
-            'passing_yards': extract_stat(team_stats, 'netPassingYards'),
-            'rushing_yards': extract_stat(team_stats, 'rushingYards'),
-            'first_downs': extract_stat(team_stats, 'firstDowns'),
-            'third_down_efficiency': extract_stat(team_stats, 'thirdDownEff'),
-            'fourth_down_efficiency': extract_stat(team_stats, 'fourthDownEff'),
-            'total_plays': extract_stat(team_stats, 'totalPlays'),
-            'yards_per_play': extract_stat(team_stats, 'yardsPerPlay'),
-            'turnovers': extract_stat(team_stats, 'turnovers'),
-            'fumbles_lost': extract_stat(team_stats, 'fumblesLost'),
-            'interceptions': extract_stat(team_stats, 'interceptions'),
-            'penalties': extract_stat(team_stats, 'totalPenaltiesYards'),
-            'sacks': extract_stat(team_stats, 'sacksYardsLost'),
-            'red_zone_efficiency': extract_stat(team_stats, 'redZoneAttempts'),
-            'completion_pct': extract_stat(team_stats, 'completionPct'),
-            'time_of_possession': extract_stat(team_stats, 'possessionTime')
-        }
+        # Extract ALL available stats
+        parsed = {}
+        for stat in team_stats:
+            stat_name = stat.get('name', '')
+            if stat_name:
+                parsed[stat_name] = {
+                    'value': stat.get('displayValue', '0'),
+                    'label': stat.get('label', stat_name),
+                    'description': stat.get('description', '')
+                }
+        
+        stats[side] = parsed
     
     return stats
 
 
+def parse_full_player_stats(boxscore):
+    """Parse ALL player stats from boxscore."""
+    players = boxscore.get('players', [])
+    result = {'away': {}, 'home': {}}
+    
+    for team_players in players:
+        side = team_players.get('homeAway', '')
+        if side not in ['home', 'away']:
+            continue
+        
+        team_stats = {}
+        
+        for stat_category in team_players.get('statistics', []):
+            cat_name = stat_category.get('name', '')
+            cat_labels = stat_category.get('labels', [])
+            cat_descriptions = stat_category.get('descriptions', [])
+            cat_athletes = stat_category.get('athletes', [])
+            
+            players_in_cat = []
+            for athlete_data in cat_athletes:
+                athlete = athlete_data.get('athlete', {})
+                stats_values = athlete_data.get('stats', [])
+                
+                # Build stat dict with labels
+                player_stats = {}
+                for i, val in enumerate(stats_values):
+                    if i < len(cat_labels):
+                        player_stats[cat_labels[i]] = val
+                
+                players_in_cat.append({
+                    'id': athlete.get('id', ''),
+                    'name': athlete.get('displayName', ''),
+                    'short_name': athlete.get('shortName', ''),
+                    'jersey': athlete.get('jersey', ''),
+                    'position': athlete.get('position', {}).get('abbreviation', '') if athlete.get('position') else '',
+                    'headshot': athlete.get('headshot', {}).get('href', '') if isinstance(athlete.get('headshot'), dict) else athlete.get('headshot', ''),
+                    'stats': player_stats
+                })
+            
+            if players_in_cat:
+                team_stats[cat_name] = {
+                    'labels': cat_labels,
+                    'descriptions': cat_descriptions,
+                    'players': players_in_cat
+                }
+        
+        result[side] = team_stats
+    
+    return result
+
+
 def parse_scoring_plays(scoring_plays):
-    """Parse scoring plays into clean format."""
+    """Parse ALL scoring play data."""
     plays = []
     for play in scoring_plays:
         team = play.get('team', {})
+        clock = play.get('clock', {})
+        period = play.get('period', {})
+        play_type = play.get('type', {})
+        
         plays.append({
-            'period': play.get('period', {}).get('number', 0),
-            'clock': play.get('clock', {}).get('displayValue', ''),
+            'id': play.get('id', ''),
+            'sequence_number': play.get('sequenceNumber', 0),
+            'period': {
+                'number': period.get('number', 0),
+                'type': period.get('type', '')
+            },
+            'clock': {
+                'value': clock.get('value', 0),
+                'display': clock.get('displayValue', '')
+            },
             'team': {
                 'id': team.get('id', ''),
                 'name': team.get('displayName', ''),
                 'abbreviation': team.get('abbreviation', ''),
                 'logo': team.get('logo', '')
             },
-            'type': play.get('type', {}).get('text', ''),
+            'type': {
+                'id': play_type.get('id', ''),
+                'text': play_type.get('text', ''),
+                'abbreviation': play_type.get('abbreviation', '')
+            },
             'text': play.get('text', ''),
             'away_score': play.get('awayScore', 0),
-            'home_score': play.get('homeScore', 0)
+            'home_score': play.get('homeScore', 0),
+            'scoring_type': play.get('scoringType', {})
         })
     return plays
 
 
-def parse_situation_from_summary(situation_data):
-    """Parse live game situation from summary API."""
+def parse_drives(drives_data):
+    """Parse ALL drive data including plays."""
+    if not drives_data:
+        return None
+    
+    previous = drives_data.get('previous', [])
+    current = drives_data.get('current', {})
+    
+    def parse_single_drive(drive):
+        plays = []
+        for play in drive.get('plays', []):
+            play_type = play.get('type', {})
+            start_info = play.get('start', {})
+            end_info = play.get('end', {})
+            
+            plays.append({
+                'id': play.get('id', ''),
+                'sequence_number': play.get('sequenceNumber', 0),
+                'type': {
+                    'id': play_type.get('id', ''),
+                    'text': play_type.get('text', ''),
+                    'abbreviation': play_type.get('abbreviation', '')
+                },
+                'text': play.get('text', ''),
+                'short_text': play.get('shortText', ''),
+                'alternative_text': play.get('alternativeText', ''),
+                'home_score': play.get('homeScore', 0),
+                'away_score': play.get('awayScore', 0),
+                'period': play.get('period', {}).get('number', 0),
+                'clock': {
+                    'value': play.get('clock', {}).get('value', 0),
+                    'display': play.get('clock', {}).get('displayValue', '')
+                },
+                'scoring_play': play.get('scoringPlay', False),
+                'priority': play.get('priority', False),
+                'modified': play.get('modified', ''),
+                'wallclock': play.get('wallclock', ''),
+                'start': {
+                    'down': start_info.get('down', 0),
+                    'distance': start_info.get('distance', 0),
+                    'yard_line': start_info.get('yardLine', 0),
+                    'yards_to_endzone': start_info.get('yardsToEndzone', 0),
+                    'possession_text': start_info.get('possessionText', ''),
+                    'down_distance_text': start_info.get('downDistanceText', ''),
+                    'short_down_distance_text': start_info.get('shortDownDistanceText', '')
+                },
+                'end': {
+                    'down': end_info.get('down', 0),
+                    'distance': end_info.get('distance', 0),
+                    'yard_line': end_info.get('yardLine', 0),
+                    'yards_to_endzone': end_info.get('yardsToEndzone', 0),
+                    'possession_text': end_info.get('possessionText', ''),
+                    'down_distance_text': end_info.get('downDistanceText', ''),
+                    'short_down_distance_text': end_info.get('shortDownDistanceText', '')
+                },
+                'stat_yardage': play.get('statYardage', 0),
+                'scoring_type': play.get('scoringType', {})
+            })
+        
+        team = drive.get('team', {})
+        result_info = drive.get('result', '')
+        start = drive.get('start', {})
+        end = drive.get('end', {})
+        time_elapsed = drive.get('timeElapsed', {})
+        
+        return {
+            'id': drive.get('id', ''),
+            'description': drive.get('description', ''),
+            'team': {
+                'id': team.get('id', ''),
+                'name': team.get('displayName', ''),
+                'abbreviation': team.get('abbreviation', ''),
+                'logo': team.get('logo', '')
+            },
+            'start': {
+                'period': start.get('period', {}).get('number', 0),
+                'clock': start.get('clock', {}).get('displayValue', ''),
+                'yard_line': start.get('yardLine', 0),
+                'text': start.get('text', '')
+            },
+            'end': {
+                'period': end.get('period', {}).get('number', 0),
+                'clock': end.get('clock', {}).get('displayValue', ''),
+                'yard_line': end.get('yardLine', 0),
+                'text': end.get('text', '')
+            },
+            'time_elapsed': {
+                'value': time_elapsed.get('value', 0),
+                'display': time_elapsed.get('displayValue', '')
+            },
+            'yards': drive.get('yards', 0),
+            'is_score': drive.get('isScore', False),
+            'offense_plays': drive.get('offensivePlays', 0),
+            'result': result_info if isinstance(result_info, str) else result_info.get('text', ''),
+            'short_display_result': drive.get('shortDisplayResult', ''),
+            'display_result': drive.get('displayResult', ''),
+            'plays': plays
+        }
+    
+    parsed_previous = [parse_single_drive(d) for d in previous]
+    parsed_current = parse_single_drive(current) if current else None
+    
+    return {
+        'previous': parsed_previous,
+        'current': parsed_current
+    }
+
+
+def parse_full_situation(situation_data):
+    """Parse FULL live game situation."""
     if not situation_data:
         return None
     
     last_play = situation_data.get('lastPlay', {})
+    down_distance = situation_data.get('downDistanceText', '')
+    
+    # Parse last play fully
+    last_play_parsed = None
+    if last_play:
+        lp_type = last_play.get('type', {})
+        lp_start = last_play.get('start', {})
+        lp_end = last_play.get('end', {})
+        
+        last_play_parsed = {
+            'id': last_play.get('id', ''),
+            'type': {
+                'id': lp_type.get('id', '') if isinstance(lp_type, dict) else '',
+                'text': lp_type.get('text', '') if isinstance(lp_type, dict) else str(lp_type),
+                'abbreviation': lp_type.get('abbreviation', '') if isinstance(lp_type, dict) else ''
+            },
+            'text': last_play.get('text', ''),
+            'short_text': last_play.get('shortText', ''),
+            'alternative_text': last_play.get('alternativeText', ''),
+            'scoring_play': last_play.get('scoringPlay', False),
+            'priority': last_play.get('priority', False),
+            'stat_yardage': last_play.get('statYardage', 0),
+            'period': last_play.get('period', {}).get('number', 0) if isinstance(last_play.get('period'), dict) else 0,
+            'clock': last_play.get('clock', {}).get('displayValue', '') if isinstance(last_play.get('clock'), dict) else '',
+            'start': {
+                'down': lp_start.get('down', 0),
+                'distance': lp_start.get('distance', 0),
+                'yard_line': lp_start.get('yardLine', 0),
+                'yards_to_endzone': lp_start.get('yardsToEndzone', 0),
+                'down_distance_text': lp_start.get('downDistanceText', ''),
+                'possession_text': lp_start.get('possessionText', '')
+            },
+            'end': {
+                'down': lp_end.get('down', 0),
+                'distance': lp_end.get('distance', 0),
+                'yard_line': lp_end.get('yardLine', 0),
+                'yards_to_endzone': lp_end.get('yardsToEndzone', 0),
+                'down_distance_text': lp_end.get('downDistanceText', ''),
+                'possession_text': lp_end.get('possessionText', '')
+            }
+        }
     
     return {
         'down': situation_data.get('down', 0),
         'distance': situation_data.get('distance', 0),
         'yard_line': situation_data.get('yardLine', 0),
-        'down_distance_text': situation_data.get('downDistanceText', ''),
-        'spot_text': situation_data.get('shortDownDistanceText', ''),
+        'yards_to_endzone': situation_data.get('yardsToEndzone', 0),
+        'down_distance_text': down_distance,
+        'short_down_distance_text': situation_data.get('shortDownDistanceText', ''),
         'possession_text': situation_data.get('possessionText', ''),
         'possession': situation_data.get('possession', ''),
-        'possession_short': situation_data.get('team', {}).get('abbreviation', '') if situation_data.get('team') else '',
         'is_red_zone': situation_data.get('isRedZone', False),
         'home_timeouts': situation_data.get('homeTimeouts', 3),
         'away_timeouts': situation_data.get('awayTimeouts', 3),
-        'last_play': {
-            'text': last_play.get('text', ''),
-            'type': last_play.get('type', {}).get('text', '') if isinstance(last_play.get('type'), dict) else '',
-            'yards': last_play.get('statYardage', 0)
-        } if last_play else None
+        'last_play': last_play_parsed
     }
 
 
 def parse_game_leaders(leaders_data):
-    """Parse game leaders from summary."""
+    """Parse ALL game leaders from summary."""
     result = {'away': {}, 'home': {}}
     
     for team_leaders in leaders_data:
@@ -408,83 +603,244 @@ def parse_game_leaders(leaders_data):
         leaders = {}
         for leader_cat in team_leaders.get('leaders', []):
             cat_name = leader_cat.get('name', '')
+            cat_display_name = leader_cat.get('displayName', '')
             cat_leaders = leader_cat.get('leaders', [])
             
-            if cat_leaders:
-                top = cat_leaders[0]
-                athlete = top.get('athlete', {})
+            parsed_leaders = []
+            for leader in cat_leaders:
+                athlete = leader.get('athlete', {})
                 headshot = athlete.get('headshot', '')
                 if isinstance(headshot, dict):
                     headshot = headshot.get('href', '')
                 
-                leaders[cat_name] = {
+                parsed_leaders.append({
+                    'rank': leader.get('rank', 0),
                     'name': athlete.get('displayName', ''),
                     'short_name': athlete.get('shortName', ''),
+                    'jersey': athlete.get('jersey', ''),
                     'position': athlete.get('position', {}).get('abbreviation', '') if athlete.get('position') else '',
                     'headshot': headshot,
-                    'jersey': athlete.get('jersey', ''),
-                    'display_value': top.get('displayValue', ''),
-                    'value': top.get('value', 0)
-                }
+                    'display_value': leader.get('displayValue', ''),
+                    'value': leader.get('value', 0),
+                    'athlete_id': athlete.get('id', '')
+                })
+            
+            leaders[cat_name] = {
+                'display_name': cat_display_name,
+                'leaders': parsed_leaders
+            }
         
         result[home_away] = leaders
     
     return result
 
 
-def enrich_featured_game(game, summary):
-    """Add detailed data to featured game from summary endpoint."""
-    if not summary:
-        return game
+def parse_game_info(game_info):
+    """Parse full game info."""
+    if not game_info:
+        return {}
     
-    # Add detailed stats
-    boxscore = summary.get('boxscore', {})
-    game['stats'] = parse_detailed_stats(boxscore)
+    venue = game_info.get('venue', {})
+    weather = game_info.get('weather', {})
+    officials = game_info.get('officials', [])
     
-    # Add scoring plays
-    game['scoring_plays'] = parse_scoring_plays(summary.get('scoringPlays', []))
-    
-    # Add/update live situation from summary (more detailed than scoreboard)
-    summary_situation = parse_situation_from_summary(summary.get('situation'))
-    if summary_situation:
-        game['situation'] = summary_situation
-    
-    # Add game leaders from summary (more detailed than scoreboard)
-    if summary.get('leaders'):
-        game['leaders'] = parse_game_leaders(summary.get('leaders', []))
-    
-    # Add weather from gameInfo if not present
-    game_info = summary.get('gameInfo', {})
-    if game_info.get('weather'):
-        weather = game_info.get('weather', {})
-        game['weather'] = {
-            'temperature': weather.get('temperature', 0),
-            'condition': weather.get('displayValue', ''),
-            'precipitation': weather.get('precipitation', 0),
-            'gust': weather.get('gust', 0)
-        }
-    
-    # Add venue details
-    if game_info.get('venue'):
-        venue = game_info.get('venue', {})
-        game['venue'] = {
+    return {
+        'venue': {
+            'id': venue.get('id', ''),
             'name': venue.get('fullName', ''),
             'city': venue.get('address', {}).get('city', ''),
             'state': venue.get('address', {}).get('state', ''),
-            'indoor': not venue.get('grass', True),
-            'capacity': venue.get('capacity', 0)
+            'indoor': venue.get('indoor', False),
+            'grass': venue.get('grass', True),
+            'capacity': venue.get('capacity', 0),
+            'images': venue.get('images', [])
+        },
+        'weather': {
+            'temperature': weather.get('temperature', 0),
+            'condition': weather.get('displayValue', ''),
+            'condition_id': weather.get('conditionId', ''),
+            'link': weather.get('link', {}),
+            'high_temperature': weather.get('highTemperature', 0),
+            'precipitation': weather.get('precipitation', 0),
+            'gust': weather.get('gust', 0)
+        },
+        'attendance': game_info.get('attendance', 0),
+        'officials': [{
+            'name': off.get('displayName', ''),
+            'position': off.get('position', {}).get('name', '') if off.get('position') else '',
+            'order': off.get('order', 0)
+        } for off in officials]
+    }
+
+
+def parse_news(news_data):
+    """Parse news/headlines."""
+    if not news_data:
+        return []
+    
+    articles = news_data.get('articles', [])
+    return [{
+        'headline': article.get('headline', ''),
+        'description': article.get('description', ''),
+        'published': article.get('published', ''),
+        'type': article.get('type', ''),
+        'premium': article.get('premium', False),
+        'links': article.get('links', {})
+    } for article in articles[:5]]  # Limit to 5 articles
+
+
+def parse_win_probability(winprobability):
+    """Parse win probability data."""
+    if not winprobability:
+        return []
+    
+    return [{
+        'play_id': wp.get('playId', ''),
+        'sequence_number': wp.get('sequenceNumber', 0),
+        'home_win_percentage': wp.get('homeWinPercentage', 0),
+        'away_win_percentage': wp.get('awayWinPercentage', 0) if 'awayWinPercentage' in wp else (1 - wp.get('homeWinPercentage', 0.5)),
+        'tie_percentage': wp.get('tiePercentage', 0),
+        'seconds_left': wp.get('secondsLeft', 0)
+    } for wp in winprobability]
+
+
+def parse_predictor(predictor):
+    """Parse game predictor/betting data."""
+    if not predictor:
+        return None
+    
+    home_team = predictor.get('homeTeam', {})
+    away_team = predictor.get('awayTeam', {})
+    
+    return {
+        'header': predictor.get('header', ''),
+        'home_team': {
+            'id': home_team.get('id', ''),
+            'game_projection': home_team.get('gameProjection', 0),
+            'team_chance_loss': home_team.get('teamChanceLoss', 0),
+            'team_chance_tie': home_team.get('teamChanceTie', 0)
+        },
+        'away_team': {
+            'id': away_team.get('id', ''),
+            'game_projection': away_team.get('gameProjection', 0),
+            'team_chance_loss': away_team.get('teamChanceLoss', 0),
+            'team_chance_tie': away_team.get('teamChanceTie', 0)
+        }
+    }
+
+
+def parse_standings(standings_data):
+    """Parse standings info if available."""
+    if not standings_data:
+        return None
+    
+    groups = standings_data.get('groups', [])
+    return [{
+        'name': group.get('name', ''),
+        'header': group.get('header', ''),
+        'standings': group.get('standings', {})
+    } for group in groups]
+
+
+def enrich_featured_game_full(game, summary):
+    """Add ALL detailed data to featured game from summary endpoint."""
+    if not summary:
+        return game
+    
+    # Boxscore - team and player stats
+    boxscore = summary.get('boxscore', {})
+    game['team_stats'] = parse_full_team_stats(boxscore)
+    game['player_stats'] = parse_full_player_stats(boxscore)
+    
+    # Scoring plays
+    game['scoring_plays'] = parse_scoring_plays(summary.get('scoringPlays', []))
+    
+    # All drives with all plays
+    game['drives'] = parse_drives(summary.get('drives'))
+    
+    # Full situation
+    summary_situation = parse_full_situation(summary.get('situation'))
+    if summary_situation:
+        game['situation'] = summary_situation
+    
+    # Game leaders
+    if summary.get('leaders'):
+        game['leaders'] = parse_game_leaders(summary.get('leaders', []))
+    
+    # Game info (venue, weather, officials, attendance)
+    game['game_info'] = parse_game_info(summary.get('gameInfo'))
+    
+    # News/headlines
+    game['news'] = parse_news(summary.get('news'))
+    
+    # Win probability
+    game['win_probability'] = parse_win_probability(summary.get('winprobability'))
+    
+    # Predictor
+    game['predictor'] = parse_predictor(summary.get('predictor'))
+    
+    # Standings
+    game['standings'] = parse_standings(summary.get('standings'))
+    
+    # Pickcenter (betting/picks)
+    game['pickcenter'] = summary.get('pickcenter', [])
+    
+    # Against the spread
+    game['against_the_spread'] = summary.get('againstTheSpread', [])
+    
+    # Odds
+    game['odds'] = summary.get('odds', [])
+    
+    # Header info (for additional context)
+    header = summary.get('header', {})
+    if header:
+        game['header'] = {
+            'id': header.get('id', ''),
+            'uid': header.get('uid', ''),
+            'season': header.get('season', {}),
+            'week': header.get('week', 0),
+            'game_note': header.get('gameNote', ''),
+            'time_valid': header.get('timeValid', False)
         }
     
-    # Add attendance
-    game['attendance'] = game_info.get('attendance', 0)
+    # Broadcasts
+    broadcasts = summary.get('broadcasts', [])
+    if broadcasts:
+        game['broadcasts_full'] = broadcasts
+    
+    # Videos if available
+    videos = summary.get('videos', [])
+    if videos:
+        game['videos'] = [{
+            'id': v.get('id', ''),
+            'headline': v.get('headline', ''),
+            'description': v.get('description', ''),
+            'duration': v.get('duration', 0),
+            'thumbnail': v.get('thumbnail', ''),
+            'links': v.get('links', {})
+        } for v in videos[:10]]
     
     return game
 
 
+# ============================================================================
+# SLIM FUNCTIONS FOR NON-FEATURED GAMES
+# ============================================================================
+
 def slim_game(game, is_featured=False):
-    """Strip unused fields to minimize payload size."""
+    """Strip unused fields for non-featured games. Featured games keep everything."""
     
-    # Slim team data - no name (use short_name), no logo (reconstruct in template)
+    if is_featured:
+        # For featured game, just clean up some redundant fields
+        slim = game.copy()
+        # Remove fields that are now in game_info
+        if 'game_info' in slim:
+            slim.pop('venue', None)
+            slim.pop('weather', None)
+            slim.pop('attendance', None)
+        return slim
+    
+    # For non-featured games, slim down significantly
     def slim_team(team):
         return {
             'abbreviation': team.get('abbreviation', ''),
@@ -493,57 +849,6 @@ def slim_game(game, is_featured=False):
             'score': team.get('score', 0)
         }
     
-    # Slim leader data (only keep what template uses)
-    def slim_leader(leader):
-        if not leader:
-            return None
-        return {
-            'short_name': leader.get('short_name', ''),
-            'display_value': leader.get('display_value', '')
-        }
-    
-    def slim_leaders(leaders):
-        if not leaders:
-            return {}
-        result = {}
-        for side in ['away', 'home']:
-            side_leaders = leaders.get(side, {})
-            if side_leaders:
-                result[side] = {}
-                for cat in ['passing', 'rushing', 'receiving']:
-                    if side_leaders.get(cat):
-                        result[side][cat] = slim_leader(side_leaders[cat])
-        return result
-    
-    # Slim situation (only keep what template uses)
-    def slim_situation(sit):
-        if not sit:
-            return None
-        result = {
-            'down_distance_text': sit.get('down_distance_text', ''),
-            'possession_text': sit.get('possession_text', ''),
-            'possession': sit.get('possession', ''),
-            'possession_short': sit.get('possession_short', ''),
-            'is_red_zone': sit.get('is_red_zone', False)
-        }
-        if sit.get('last_play'):
-            result['last_play'] = {'text': sit['last_play'].get('text', '')}
-        return result
-    
-    # Slim scoring plays (only for featured game)
-    def slim_scoring_plays(plays):
-        if not plays:
-            return []
-        return [{
-            'period': p.get('period', 0),
-            'team': {'abbreviation': p.get('team', {}).get('abbreviation', '')},
-            'type': p.get('type', ''),
-            'text': p.get('text', ''),
-            'away_score': p.get('away_score', 0),
-            'home_score': p.get('home_score', 0)
-        } for p in plays]
-    
-    # Slim periods (remove "type" field)
     def slim_periods(periods):
         if not periods:
             return []
@@ -553,66 +858,14 @@ def slim_game(game, is_featured=False):
             'home': p.get('home', {})
         } for p in periods]
     
-    # Slim broadcaster - no logo (reconstruct in template)
     def slim_broadcasters(broadcasters):
         if not broadcasters:
             return []
         b = broadcasters[0] if broadcasters else {}
         return [{'name': b.get('name', '')}]
     
-    # Slim odds
-    def slim_odds(odds):
-        if not odds:
-            return None
-        return {
-            'spread': odds.get('spread', ''),
-            'over_under': odds.get('over_under', 0)
-        }
-    
-    # Slim venue
-    def slim_venue(venue):
-        if not venue:
-            return {}
-        return {
-            'name': venue.get('name', ''),
-            'city': venue.get('city', ''),
-            'state': venue.get('state', '')
-        }
-    
-    # Slim weather
-    def slim_weather(weather):
-        if not weather:
-            return None
-        return {
-            'temperature': weather.get('temperature', 0),
-            'condition': weather.get('condition', '')
-        }
-    
-    # Slim stats - remove unused fields
-    def slim_stats(stats):
-        if not stats:
-            return None
-        result = {}
-        for side in ['away', 'home']:
-            s = stats.get(side, {})
-            if s:
-                result[side] = {
-                    'total_yards': s.get('total_yards', '0'),
-                    'passing_yards': s.get('passing_yards', '0'),
-                    'rushing_yards': s.get('rushing_yards', '0'),
-                    'first_downs': s.get('first_downs', '0'),
-                    'third_down_efficiency': s.get('third_down_efficiency', '0-0'),
-                    'fourth_down_efficiency': s.get('fourth_down_efficiency', '0-0'),
-                    'red_zone_efficiency': s.get('red_zone_efficiency', '0-0'),
-                    'turnovers': s.get('turnovers', '0'),
-                    'penalties': s.get('penalties', '0-0'),
-                    'time_of_possession': s.get('time_of_possession', '0:00')
-                }
-        return result
-    
     status = game.get('status', '')
     
-    # Build slim game
     slim = {
         'status': status,
         'start_time_pacific': game.get('start_time_pacific', ''),
@@ -627,59 +880,24 @@ def slim_game(game, is_featured=False):
         'display_rank': game.get('display_rank', 0)
     }
     
-    # Venue only for Scheduled and In Progress
     if status in ['Scheduled', 'In Progress']:
-        slim['venue'] = slim_venue(game.get('venue', {}))
-    
-    # Broadcaster only for Scheduled and In Progress
-    if status in ['Scheduled', 'In Progress']:
-        slim['broadcasters'] = slim_broadcasters(game.get('broadcasters', []))
-    
-    # Only include if present
-    if game.get('odds'):
-        slim['odds'] = slim_odds(game['odds'])
-    
-    if game.get('weather'):
-        slim['weather'] = slim_weather(game['weather'])
-    
-    if game.get('leaders'):
-        leaders = slim_leaders(game['leaders'])
-        if leaders:
-            slim['leaders'] = leaders
-    
-    if game.get('situation'):
-        slim['situation'] = slim_situation(game['situation'])
-    
-    # Featured game extras
-    if is_featured:
-        if game.get('stats'):
-            slim['stats'] = slim_stats(game['stats'])
-        if game.get('scoring_plays'):
-            slim['scoring_plays'] = slim_scoring_plays(game['scoring_plays'])
-        if game.get('attendance'):
-            slim['attendance'] = game['attendance']
-    
-    # Season info only for featured (others use top-level)
-    if is_featured:
-        slim['season'] = {
-            'type_name': game.get('season', {}).get('type_name', ''),
-            'week': game.get('season', {}).get('week', 0)
+        venue = game.get('venue', {})
+        slim['venue'] = {
+            'name': venue.get('name', ''),
+            'city': venue.get('city', ''),
+            'state': venue.get('state', '')
         }
+        slim['broadcasters'] = slim_broadcasters(game.get('broadcasters', []))
     
     return slim
 
 
 def rank_games(games):
-    """Rank games: In Progress first, then Final, then Scheduled.
-    
-    Randomly selects the featured game from the highest priority tier
-    to provide variety across runs.
-    """
+    """Rank games: In Progress first, then Final, then Scheduled."""
     in_progress = [g for g in games if g['status'] == 'In Progress']
     final = [g for g in games if g['status'] == 'Final']
     scheduled = [g for g in games if g['status'] == 'Scheduled']
     
-    # Randomly select featured game from highest priority tier
     if in_progress:
         featured = random.choice(in_progress)
         in_progress.remove(featured)
@@ -689,7 +907,6 @@ def rank_games(games):
         final.remove(featured)
         final = [featured] + final
     
-    # Sort scheduled by start time
     scheduled.sort(key=lambda g: g['start_time_utc'])
     
     ranked = in_progress + final + scheduled
@@ -701,7 +918,7 @@ def rank_games(games):
 
 def main():
     print("=" * 60)
-    print("NFL ESPN API - Game Fetcher")
+    print("NFL ESPN API - Full Data Fetcher")
     print("=" * 60)
     
     # Fetch scoreboard
@@ -720,7 +937,6 @@ def main():
     for event in events:
         game = parse_game(event)
         all_games.append(game)
-        # Debug: print situation if in progress
         if game['status'] == 'In Progress' and game.get('situation'):
             print(f"  {game['short_name']}: {game['situation'].get('down_distance_text', 'No situation')}")
     
@@ -731,26 +947,33 @@ def main():
     for g in all_games:
         print(f"  {g['display_rank']}. {g['away_team']['abbreviation']} @ {g['home_team']['abbreviation']} ({g['status']})")
     
-    # Sort games by display_rank before enrichment
+    # Sort by display_rank
     all_games.sort(key=lambda g: g.get('display_rank', 999))
     
-    # Enrich the #1 ranked game in-place (no duplicate)
+    # Enrich #1 ranked game with FULL data
     if all_games:
         rank1_game = all_games[0]
-        print(f"\nFetching detailed summary for: {rank1_game['away_team']['name']} @ {rank1_game['home_team']['name']}...")
+        print(f"\nFetching FULL summary for: {rank1_game['away_team']['name']} @ {rank1_game['home_team']['name']}...")
         
         summary = fetch_game_summary(rank1_game['id'])
         
         if summary:
-            # Enrich in-place - modifies all_games[0] directly
-            enrich_featured_game(rank1_game, summary)
-            print("  Loaded detailed stats, scoring plays, and game leaders")
+            enrich_featured_game_full(rank1_game, summary)
+            print("  ✓ Loaded full team stats")
+            print("  ✓ Loaded full player stats")
+            print("  ✓ Loaded all drives and plays")
+            print("  ✓ Loaded scoring plays")
+            print("  ✓ Loaded game leaders")
+            print("  ✓ Loaded win probability")
+            print("  ✓ Loaded game info (venue, weather, officials)")
             if rank1_game.get('situation'):
                 print(f"  Situation: {rank1_game['situation'].get('down_distance_text', 'N/A')}")
+            if rank1_game.get('drives', {}).get('previous'):
+                print(f"  Drives: {len(rank1_game['drives']['previous'])} completed")
         else:
             print("  Could not load summary, using scoreboard data")
     
-    # Get season info from scoreboard
+    # Get season info
     season_info = {
         'year': scoreboard.get('season', {}).get('year', 0),
         'type': scoreboard.get('season', {}).get('type', 0),
@@ -758,31 +981,33 @@ def main():
         'week': scoreboard.get('week', {}).get('number', 0)
     }
     
-    # Slim all games for minimal payload (limit to 4)
-    slim_games = []
+    # Build output - featured game gets full data, others get slimmed
+    output_games = []
     for i, game in enumerate(all_games[:4]):
-        is_featured = (i == 0)  # First game is featured
-        slim_games.append(slim_game(game, is_featured=is_featured))
+        is_featured = (i == 0)
+        output_games.append(slim_game(game, is_featured=is_featured))
     
-    # Save to JSON - no more featured_game duplicate
+    # Save to JSON
     os.makedirs('docs', exist_ok=True)
     output = {
         'fetched_at': datetime.now().isoformat(),
         'season': season_info,
-        'games': slim_games
+        'games': output_games
     }
     
-    with open('docs/nfl_games.json', 'w') as f:
-        json.dump(output, f, separators=(',', ':'))  # No whitespace for smaller payload
-    
-    # Also save pretty version for debugging
-    with open('docs/nfl_games_debug.json', 'w') as f:
+    # Pretty version (full data is large, don't minify for debugging)
+    with open('docs/nfl_games_full.json', 'w') as f:
         json.dump(output, f, indent=2)
     
-    # Report size
-    import os as os_module
-    size = os_module.path.getsize('docs/nfl_games.json')
-    print(f"\nSaved to docs/nfl_games.json ({size:,} bytes / {size/1024:.1f} KB)")
+    # Compact version
+    with open('docs/nfl_games.json', 'w') as f:
+        json.dump(output, f, separators=(',', ':'))
+    
+    # Report sizes
+    full_size = os.path.getsize('docs/nfl_games_full.json')
+    compact_size = os.path.getsize('docs/nfl_games.json')
+    print(f"\nSaved to docs/nfl_games_full.json ({full_size:,} bytes / {full_size/1024:.1f} KB)")
+    print(f"Saved to docs/nfl_games.json ({compact_size:,} bytes / {compact_size/1024:.1f} KB)")
 
 
 if __name__ == "__main__":
