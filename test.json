@@ -1,0 +1,219 @@
+Predictions for 51A route to Cape and Cowl:
+Destination: Cape and Cowl
+Leave Home: 4:19 PM
+Bus: 4:26 PM - 51A Fruitvale BART
+Arrive: 4:39 PM
+D2D Time: 0:20:00
+---
+Destination: Cape and Cowl
+Leave Home: 4:31 PM
+Bus: 4:38 PM - 51A Fruitvale BART
+Arrive: 4:51 PM
+D2D Time: 0:20:00
+---
+Destination: Cape and Cowl
+Leave Home: 4:44 PM
+Bus: 4:51 PM - 51A Fruitvale BART
+Arrive: 5:04 PM
+D2D Time: 0:20:00
+---
+Destination: Cape and Cowl
+Leave Home: 4:54 PM
+Bus: 5:01 PM - 51A Fruitvale BART
+Arrive: 5:14 PM
+D2D Time: 0:20:00
+---
+
+
+Predictions for NL line routes to Grand Lake Theater:
+Destination: Grand Lake Theater
+Leave Home: 4:13 PM
+Bus: 4:31 PM - NL Eastmont Transit Center
+Arrive: 4:37 PM
+D2D Time: 0:24:00
+---
+Destination: Grand Lake Theater
+Leave Home: 4:29 PM
+Bus: 4:47 PM - NL Eastmont Transit Center
+Arrive: 4:53 PM
+D2D Time: 0:24:00
+---
+Destination: Grand Lake Theater
+Leave Home: 4:42 PM
+Bus: 5:00 PM - NL Eastmont Transit Center
+Arrive: 5:06 PM
+D2D Time: 0:24:00
+---
+{
+  "generated_at": "2026-01-12T16:12:56.998678",
+  "shuttle": {
+    "title": "Shuttle \u2192 AMC Bay Street",
+    "generated_at": "2026-01-12T16:12:56.998684",
+    "results": [
+      {
+        "destination": "AMC Bay Street",
+        "mode": "shuttle",
+        "on": "Shellmound Pickup",
+        "off": "AMC Bay Street",
+        "leave_home": "2026-01-12T16:15:00",
+        "board": "2026-01-12T16:45:00",
+        "arrive": "2026-01-12T17:00:00",
+        "d2d_minutes": 45,
+        "line": "Shellmound Shuttle"
+      },
+      {
+        "destination": "AMC Bay Street",
+        "mode": "shuttle",
+        "on": "Shellmound Pickup",
+        "off": "AMC Bay Street",
+        "leave_home": "2026-01-12T16:30:00",
+        "board": "2026-01-12T17:00:00",
+        "arrive": "2026-01-12T17:15:00",
+        "d2d_minutes": 45,
+        "line": "Shellmound Shuttle"
+      },
+      {
+        "destination": "AMC Bay Street",
+        "mode": "shuttle",
+        "on": "Shellmound Pickup",
+        "off": "AMC Bay Street",
+        "leave_home": "2026-01-12T16:45:00",
+        "board": "2026-01-12T17:15:00",
+        "arrive": "2026-01-12T17:30:00",
+        "d2d_minutes": 45,
+        "line": "Shellmound Shuttle"
+      }
+    ]
+  },
+  "bart_metreon": {
+    "title": "BART \u2192 AMC Metreon",
+    "generated_at": "2026-01-12T16:12:56.998688",
+    "results": [
+      {
+        "destination": "AMC Metreon",
+        "mode": "bart",
+        "on": "19th Street Oakland",
+        "off": "Powell Street",
+        "leave_home": "2026-01-12T16:17:29",
+        "board": "2026-01-12T16:37:29",
+        "arrive": "2026-01-12T17:09:41",
+        "d2d_minutes": 52,
+        "line": "Yellow-S \u2013 Antioch to SF Int'l Airport SFO/Millbrae",
+        "headsign": "San Francisco International Airport"
+      },
+      {
+        "destination": "AMC Metreon",
+        "mode": "bart",
+        "on": "19th Street Oakland",
+        "off": "Powell Street",
+        "leave_home": "2026-01-12T16:25:35",
+        "board": "2026-01-12T16:45:35",
+        "arrive": "2026-01-12T17:17:47",
+        "d2d_minutes": 52,
+        "line": "Yellow-S \u2013 Antioch to SF Int'l Airport SFO/Millbrae",
+        "headsign": "San Francisco International Airport"
+      },
+      {
+        "destination": "AMC Metreon",
+        "mode": "bart",
+        "on": "19th Street Oakland",
+        "off": "Powell Street",
+        "leave_home": "2026-01-12T16:32:47",
+        "board": "2026-01-12T16:52:47",
+        "arrive": "2026-01-12T17:24:59",
+        "d2d_minutes": 52,
+        "line": "Red-S \u2013 Richmond to SF Int'l Airport SFO/Millbrae",
+        "headsign": "SF / SFO Airport / Millbrae"
+      },
+      {
+        "destination": "AMC Metreon",
+        "mode": "bart",
+        "on": "19th Street Oakland",
+        "off": "Powell Street",
+        "leave_home": "2026-01-12T16:37:29",
+        "board": "2026-01-12T16:57:29",
+        "arrive": "2026-01-12T17:29:41",
+        "d2d_minutes": 52,
+        "line": "Yellow-S \u2013 Antioch to SF Int'l Airport SFO/Millbrae",
+        "headsign": "San Francisco International Airport"
+      },
+      {
+        "destination": "AMC Metreon",
+        "mode": "bart",
+        "on": "19th Street Oakland",
+        "off": "Powell Street",
+        "leave_home": "2026-01-12T16:45:35",
+        "board": "2026-01-12T17:05:35",
+        "arrive": "2026-01-12T17:37:47",
+        "d2d_minutes": 52,
+        "line": "Yellow-S \u2013 Antioch to SF Int'l Airport SFO/Millbrae",
+        "headsign": "San Francisco International Airport"
+      }
+    ]
+  },
+  "bart_alamo": {
+    "title": "BART \u2192 Alamo Drafthouse",
+    "generated_at": "2026-01-12T16:12:56.998691",
+    "results": [
+      {
+        "destination": "Alamo Drafthouse",
+        "mode": "bart",
+        "on": "19th Street Oakland",
+        "off": "16th St Mission",
+        "leave_home": "2026-01-12T16:17:29",
+        "board": "2026-01-12T16:37:29",
+        "arrive": "2026-01-12T17:13:47",
+        "d2d_minutes": 56,
+        "line": "Yellow-S \u2013 Antioch to SF Int'l Airport SFO/Millbrae",
+        "headsign": "San Francisco International Airport"
+      },
+      {
+        "destination": "Alamo Drafthouse",
+        "mode": "bart",
+        "on": "19th Street Oakland",
+        "off": "16th St Mission",
+        "leave_home": "2026-01-12T16:25:35",
+        "board": "2026-01-12T16:45:35",
+        "arrive": "2026-01-12T17:21:53",
+        "d2d_minutes": 56,
+        "line": "Yellow-S \u2013 Antioch to SF Int'l Airport SFO/Millbrae",
+        "headsign": "San Francisco International Airport"
+      },
+      {
+        "destination": "Alamo Drafthouse",
+        "mode": "bart",
+        "on": "19th Street Oakland",
+        "off": "16th St Mission",
+        "leave_home": "2026-01-12T16:32:47",
+        "board": "2026-01-12T16:52:47",
+        "arrive": "2026-01-12T17:29:05",
+        "d2d_minutes": 56,
+        "line": "Red-S \u2013 Richmond to SF Int'l Airport SFO/Millbrae",
+        "headsign": "SF / SFO Airport / Millbrae"
+      },
+      {
+        "destination": "Alamo Drafthouse",
+        "mode": "bart",
+        "on": "19th Street Oakland",
+        "off": "16th St Mission",
+        "leave_home": "2026-01-12T16:37:29",
+        "board": "2026-01-12T16:57:29",
+        "arrive": "2026-01-12T17:33:47",
+        "d2d_minutes": 56,
+        "line": "Yellow-S \u2013 Antioch to SF Int'l Airport SFO/Millbrae",
+        "headsign": "San Francisco International Airport"
+      },
+      {
+        "destination": "Alamo Drafthouse",
+        "mode": "bart",
+        "on": "19th Street Oakland",
+        "off": "16th St Mission",
+        "leave_home": "2026-01-12T16:45:35",
+        "board": "2026-01-12T17:05:35",
+        "arrive": "2026-01-12T17:41:53",
+        "d2d_minutes": 56,
+        "line": "Yellow-S \u2013 Antioch to SF Int'l Airport SFO/Millbrae",
+        "headsign": "San Francisco International Airport"
+      }
+    ]
+  }
