@@ -481,7 +481,7 @@ def main():
             print("  ✓ Loaded slim stats")
             print("  ✓ Loaded scoring plays")
             print("  ✓ Loaded last 2 drives")
-            if rank1_game.get('drives', {}).get('recent'):
+            if (rank1_game.get('drives') or {}).get('recent'):
                 print(f"    - {len(rank1_game['drives']['recent'])} recent drives")
         else:
             print("  Could not load summary")
